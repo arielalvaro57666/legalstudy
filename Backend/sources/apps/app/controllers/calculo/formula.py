@@ -15,9 +15,9 @@ class AntiquityCalculoStrategy(CalculoStrategy):
     name = 'Antiquity'
     
     def calculate(self, status, dateInfo, results ) -> int:
-                
-        if (status['reason'] == ReasonEnum.SinCausa):
-
+ 
+        if (status['reason'] == ReasonEnum.SinCausa.value):
+            
             if (dateInfo['months'] >= 3):
                 
                 return status['salary'] * (dateInfo['years'] + 1) 
@@ -31,7 +31,7 @@ class NoticedSust(CalculoStrategy):
     
     def calculate(self, status, dateInfo, results ) -> int:
         
-        if (status['reason'] == ReasonEnum.SinCausa or status['reason'] == ReasonEnum.Renuncia):
+        if (status["noticed"] == False and status['reason'] == ReasonEnum.SinCausa.value or status['reason'] == ReasonEnum.Renuncia.value ):
 
             if (dateInfo['years'] <= 5):
 
@@ -64,7 +64,7 @@ class NoticedSac(CalculoStrategy):
     
     def calculate(self, status, dateInfo, results ) -> int:
 
-        if ( status['reason'] ==  ReasonEnum.SinCausa):
+        if (status["noticed"] == False and status['reason'] ==  ReasonEnum.SinCausa.value or status['reason'] == ReasonEnum.Renuncia.value):
 
             return ( 8.33 * results['noticedSust'] ) / 100 
         

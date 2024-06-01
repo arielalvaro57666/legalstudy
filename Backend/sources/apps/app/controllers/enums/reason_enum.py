@@ -1,6 +1,6 @@
 from enum import Enum
 
 class ReasonEnum(Enum):
-    ConCausa = 'Con Causa'
-    SinCausa = 'Sin Causa'
+    ConCausa = 'Con causa'
+    SinCausa = 'Sin causa'
     Renuncia = 'Renuncia'

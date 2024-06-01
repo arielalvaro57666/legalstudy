@@ -30,6 +30,7 @@ export function IndemnizacionCalculo(){
         const data = Object.fromEntries(formData.entries())
         
         
+        
         requestCalculo(data)
     }
 

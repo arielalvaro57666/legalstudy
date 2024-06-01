@@ -12,8 +12,8 @@ export class CalculoRequest{
             status: {
                 salary: parseInt(data.salary),
                 reason: data.reason,
-                noticed: data.noticed,
-                black: data.black
+                noticed: data.noticed === 'true',
+                black: data.black === 'true'
             }
         }
 

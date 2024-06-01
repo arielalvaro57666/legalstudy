@@ -26,14 +26,11 @@ def processCalculo(data):
         formula.NoticedSac()
     ]
 
-    if (status["noticed"] == False):
-        
-        calculo_strategies = calculo_strategies + [formula.NoticedSust(), formula.NoticedSac()]
 
 
     dateProcessor = date.Date(dates['initial_date'], dates['final_date'], date_strategies)
     dateProcessor.execute()
-
+  
     formulaProcessor = formula.indemnificationProcessor(status, dateProcessor.results, calculo_strategies)
     formulaProcessor.execute()
 
