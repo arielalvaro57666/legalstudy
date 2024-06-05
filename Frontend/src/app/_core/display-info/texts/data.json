@@ -26,6 +26,42 @@
 
     "Domestico":{"title": "EMPLEADA DOMESTICA",
                  "options": {}}
+    
+},
+
+"Civil":{
+
+    "AccidenteTransito":{"title": "ACCIDENTES DE TRANSITO",
+               "options": {"Explicacion": "Está situación se da cuando tú empleador toma la decisión de dejarte sin trabajo con o sin una causa que lo justifique. Dependiendo el caso concreto deberá abonarte o no una indemnización.",
+                           "Con Causa": "Está situación se da cuando tú empleador toma la decisión de dejarte sin trabajo con o sin una causa que lo justifique. Dependiendo el caso concreto deberá abonarte o no una indemnización.",
+                           "Sin Causa": "En este caso tu empleador te despide sin dar justificación alguna. Si bien está en su derecho de hacerlo, deberá pagar las indemnizaciones correspondientes",
+                           "Cuanto me corresponde":""}},
+                        
+    "Declaratoria":{"title": "DECLARATORIA DE HEREDEROS/SUCESIONES",
+                     "options": {"Explicacion": "Trabajar en negro es simplemente trabajar sin un contrato laboral de por medio.",
+                                 "Trabajo Totalmente en Negro": "En este caso, jamás te dieron de alta en AFIP, no tenés recibo de sueldo, ni obra social ni ART. POdes dejar de trabajar en cualquier momento sin necesidad de que te despidan y hacer el reclamo correspondiente tanto de indemnización como multas.",
+                                 "Trabajo Mal Registrado": "Trabajar en negro es simplemente trabajar sin un contrato laboral de por medio."}},
+
+    "Desalojos":{"title": "DESALOJOS/CONTRATO DE LOCACIÓN/ADMINISTRACION DE INMUEBLES",
+                       "options": {"Explicacion": "Es muy común en la práctica que el empleador le pida al trabajador enviar la renuncia a través del correo Argentino a cambio de continuar trabajando en la empresa o de una suma indemnizatoria. NUNCA MANDES LA RENUNCIA ES UNA TRAMPA!. Ya que, si la envias, no solo perderas la mayoría de tus derechos sino que, su luego tu empleador no quiere abonarte nada de lo prometido, no tendras como reclamarle que te pague."}}
+
+},
+"Family":{
+
+    "DivorcioExpress":{"title": "DIVORCIO EXPRESS",
+               "options": {"Explicacion": "Está situación se da cuando tú empleador toma la decisión de dejarte sin trabajo con o sin una causa que lo justifique. Dependiendo el caso concreto deberá abonarte o no una indemnización.",
+                           "Con Causa": "Está situación se da cuando tú empleador toma la decisión de dejarte sin trabajo con o sin una causa que lo justifique. Dependiendo el caso concreto deberá abonarte o no una indemnización.",
+                           "Sin Causa": "En este caso tu empleador te despide sin dar justificación alguna. Si bien está en su derecho de hacerlo, deberá pagar las indemnizaciones correspondientes",
+                           "Cuanto me corresponde":""}},
+                        
+    "CuotaAlimentaria":{"title": "CUOTA ALIMENTARIA",
+                     "options": {"Explicacion": "Trabajar en negro es simplemente trabajar sin un contrato laboral de por medio.",
+                                 "Trabajo Totalmente en Negro": "En este caso, jamás te dieron de alta en AFIP, no tenés recibo de sueldo, ni obra social ni ART. POdes dejar de trabajar en cualquier momento sin necesidad de que te despidan y hacer el reclamo correspondiente tanto de indemnización como multas.",
+                                 "Trabajo Mal Registrado": "Trabajar en negro es simplemente trabajar sin un contrato laboral de por medio."}},
+
+    "Filiacion":{"title": "FILIACION",
+                       "options": {"Explicacion": "Es muy común en la práctica que el empleador le pida al trabajador enviar la renuncia a través del correo Argentino a cambio de continuar trabajando en la empresa o de una suma indemnizatoria. NUNCA MANDES LA RENUNCIA ES UNA TRAMPA!. Ya que, si la envias, no solo perderas la mayoría de tus derechos sino que, su luego tu empleador no quiere abonarte nada de lo prometido, no tendras como reclamarle que te pague."}}
+
 }
 
 }

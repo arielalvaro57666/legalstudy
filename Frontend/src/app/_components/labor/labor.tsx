@@ -11,12 +11,6 @@ import { LaboralEnum } from './enums/labor.enum';
 //Icons
 import { HiArrowCircleLeft } from "react-icons/hi";
 
-
-
-
-/*
-    COMPONENTE DESITNADO A LA SECCION LABORAL INTERACTIVA
-*/
 export default function Laboral(){
    
 

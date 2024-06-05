@@ -102,8 +102,8 @@ export function CompensationForm({handleResults}: ICompensationFormProp){
                 <section className=" p-4">
                     <form className="flex flex-col gap-4 justify-center items-center" onSubmit={handleSubmit}> 
                         
-                        <div className="flex flex-col items-center gap-1 lg:flex lg:flex-row lg:gap-10">
-                            <span className="text-red-500 font-extralight">{formErrors.dateError}</span>
+                        <div className="flex flex-col items-center gap-2 lg:flex lg:flex-row lg:justify-center lg:gap-10">
+                            <span className="text-red-500 font-extralight lg:absolute top-1">{formErrors.dateError}</span>
                             <div className=" flex flex-col items-center gap-1">
                                 <h2 className="text-white opacity-80">Fecha de ingreso</h2>
                                 <input className=" bg-zinc-800 text-white opacity-80 rounded-md text-lg border-2 border-zinc-900" type="date" name="initial_date"/>
@@ -207,7 +207,7 @@ export function CompensationForm({handleResults}: ICompensationFormProp){
 
                         </div>
 
-                        <button type="submit" className="p-4 bg-zinc-800 hover:bg-blue-950">Calcular</button>
+                        <button type="submit" className="p-4 bg-zinc-800 rounded-md text-white hover:bg-blue-950">Calcular</button>
                     </form>
                 </section>
 
