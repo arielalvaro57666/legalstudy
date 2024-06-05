@@ -23,7 +23,8 @@ def processCalculo(data):
         formula.ProportionalSac(),
         formula.Holiday(),
         formula.NoticedSust(),
-        formula.NoticedSac()
+        formula.NoticedSac(),
+        formula.totalSum()
     ]
 
 

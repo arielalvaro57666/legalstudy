@@ -5,8 +5,6 @@ import { IDisplayInfo, IRequestDisplay } from "../interfaces/display-info.interf
 class DisplayInfoService{
     
     Data = require('../texts/data.json')
-    
-    meme = 3
 
     getTitle(request: IRequestDisplay, option: string): string{
         console.log(request)

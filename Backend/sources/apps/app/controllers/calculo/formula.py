@@ -12,7 +12,7 @@ class CalculoStrategy(ABC):
         pass      
 
 class AntiquityCalculoStrategy(CalculoStrategy):
-    name = 'Antiquity'
+    name = 'antiquity'
     
     def calculate(self, status, dateInfo, results ) -> int:
  
@@ -96,6 +96,17 @@ class Holiday(CalculoStrategy):
 
         return ( status['salary'] / 25 ) * (percentage / 365)
 
+class totalSum(CalculoStrategy):
+    name = "total"
+
+    def calculate(self, status, dateInfo, results ) -> int:
+        total = 0
+
+        for key, value in results.items():
+            total += value
+
+        return total
+
 class indemnificationProcessor:
     results = {}
     
@@ -109,8 +120,12 @@ class indemnificationProcessor:
         for strategie in self._strategies:
             
             result = strategie.calculate(self.status, self.dateInfo, self.results)
-            
             self.results[strategie.name] = floor(result)
+
+       
+
+
+        
         
 # hacer strategias 
 

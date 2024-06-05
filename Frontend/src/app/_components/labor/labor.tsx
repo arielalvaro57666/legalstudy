@@ -10,7 +10,7 @@ import { LaboralEnum } from './enums/labor.enum';
 
 //Icons
 import { HiArrowCircleLeft } from "react-icons/hi";
-import { IndemnizacionCalculo } from './labor-formula';
+
 
 
 

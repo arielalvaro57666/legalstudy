@@ -3,7 +3,7 @@ import { IDisplayInfo, IOptionProp, IRequestDisplay, IRequestDisplayProp } from 
 import DisplayServiceContext from "./services/display.services";
 import { ComponentMap } from "../component-map/component-map";
 import { info } from "console";
-import { IndemnizacionCalculo } from "@/app/_components/labor/labor-formula";
+import { Indemnization } from "@/app/_components/labor/labor-formula";
 
 
 
@@ -70,7 +70,7 @@ export function DisplayInfo({section, selection}: IRequestDisplay, ){
                 <p className='opacity-90'>{information?.text}</p>
             </div>
             
-            : <IndemnizacionCalculo/> }
+            : <Indemnization/> }
 
             <div className="w-full flex flex-col gap-4
                             lg:flex-row lg:justify-center">

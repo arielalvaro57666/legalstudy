@@ -11,13 +11,16 @@ from .controllers.execute import processCalculo
 class Calculo(RetrieveAPIView):
 
     def post(self, request):
-        
-        print(request.data)
+        try:
+            print(request.data)
 
-        data = processCalculo(request.data)
+            data = processCalculo(request.data)
+            
+            return Response(data)   
         
-        return Response(data)
-
+        except Exception as exception:
+            #Do logger class for this
+            pass
 
 
 

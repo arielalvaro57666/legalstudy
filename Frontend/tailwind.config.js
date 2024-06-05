@@ -10,6 +10,26 @@ module.exports = {
 
   theme: {
     extend: {
+      keyframes: {
+        appear: {
+          "0%":{
+            opacity: "0%"
+          },
+          "50%":{
+            opacity: "50%"
+          },
+          "75%":{
+            opacity: "75%"
+          },
+          "100%":{
+            opacity: "100%"
+          },
+        }
+      },
+      animation:{
+        'appear-opacity': "appear 2s linear"
+      },
+      
       backgroundImage: {
         'logo': "url('../style/logoT.png')",
         'banner': "url('../style/image3.jpg')",
