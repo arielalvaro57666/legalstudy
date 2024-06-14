@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -25,21 +26,26 @@ SECRET_KEY = 'django-insecure--&mwc-d&y^#of@@+w+rrlu9qo%apr&0k%a#@_duxor1eo82+l0
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-print(os.path.join(BASE_DIR, "logs"))
+
 
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     'corsheaders',
     'apps.core',
-    'apps.app'
+    'apps.app',
+    
 ]
+
+ASGI_APPLICATION = 'project.asgi.application'
 
 CORS_ORIGIN_ALLOW_ALL = True
 MIDDLEWARE = [
@@ -127,6 +133,20 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+
+# ---------------------------------CHANNEL---------------------------------
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
+        # 'ROUTING': 'backend.routing.channel_routing',
+    }
+}
 
 # LOGS CONFIGURATION
 

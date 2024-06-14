@@ -3,6 +3,7 @@ import { createContext } from "react"
 class DataService{
 
     url_backend = 'http://0.0.0.0:8088/api/v1/'
+    ws_backend = 'ws://0.0.0.0:8088/'
 
 
     setUrl(url: string){

@@ -1,23 +1,50 @@
 'use client'
-import { KeyboardEvent, useEffect, useRef, useState } from "react"
-import { TextField } from "@mui/material";
-import { v4 as uuidv4 } from 'uuid';
-
+import { KeyboardEvent, useContext, useEffect, useRef, useState } from "react"
 import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/io'
 import { BiSend } from "react-icons/bi";
 import { Message, MessageProp } from "./interfaces/chat.interface";
+import DataServiceContext from "@/app/_core/services/dataService";
+import { Socket } from "dgram";
+
 
 export default function Chat(){
 
+    const data_service = useContext(DataServiceContext)
 
     const [open, setOpen] = useState<boolean>(false)
+    const [chatSocket, setChatSocket] = useState<WebSocket>()
 
-    const handleOpen = () => {
+    useEffect(() => {
 
+        initializeWebSocket()
+
+    },[])
+
+    const initializeWebSocket = () => {
+        const socket = new WebSocket(`${data_service.ws_backend}ws/socket`)
+        setChatSocket(socket)
+
+        socket.onopen = socketOnOpen
+        socket.onmessage = socketOnMessage
+        socket.onerror = socketOnError
+        socket.onclose = socketOnClose
+
+    }    
+
+    const socketOnOpen = (response: Event) => {
+        // Make context state to the root and make the chat appear in case of success
     }
-    const mes: Message = {
-        text:'rappp!!!'
+    const socketOnMessage = (response: MessageEvent) => {
+        let message = response.data
+        console.log(message)
     }
+    const socketOnClose = (response: CloseEvent) => {
+        // do nothing
+    }
+    const socketOnError = (response: Event) => {
+        //do something
+    }
+
     return(
         <section className="fixed bottom-0 z-50 w-full">
 
