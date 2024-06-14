@@ -1,4 +1,10 @@
 # Ignorar la carpeta env y su contenido
 env/
 
-
+# Files -------------------------------
+.env
+*.pyc
+*.orig
+*.pdf
+uwsgi.log
+sources/db.sqlite3
