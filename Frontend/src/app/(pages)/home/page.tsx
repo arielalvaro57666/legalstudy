@@ -44,6 +44,7 @@ export default function Home() {
                 
             </div>
 
+            <Chat/>
             {/* {chatOpen && <ChatBox closeChat={openChat}/>} */}
             {/* <Chat/> */}
             <Footer/>

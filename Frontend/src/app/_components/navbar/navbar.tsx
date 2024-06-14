@@ -100,13 +100,13 @@ export default function Navbar(){//{chat}:headerProp
                     </div>
                 
                     <div className='2xl:flex hidden xl:flex 2xl:space-x-5 xl:space-x-5  2xl:relative right-10'>
+                        
                         <a className= {`text-center bg-${colorNav} flex items-center justify-center text-white opacity-70 font-medium 2xl:h-10 xl:h-10 h-2 drop-shadow-2xl 2xl:font  2xl:text-lg   xl:text-md no-underline 2xl:w-50 2xl:p-5 xl:w-50 xl:p-5 p-3 rounded-md text-xs`} href='#home' ><h2>Nosotros</h2></a>
                         <a className= {`text-center bg-${colorNav} flex items-center justify-center text-white opacity-70 font-medium 2xl:h-10 xl:h-10 h-2 drop-shadow-2xl 2xl:font  2xl:text-lg   xl:text-md no-underline 2xl:w-50 2xl:p-5 xl:w-50 xl:p-5 p-3 rounded-md text-xs`} href='#laboral' ><h2>Laboral</h2></a>
                         <a className= {`text-center bg-${colorNav} flex items-center justify-center text-white opacity-70 font-medium 2xl:h-10 xl:h-10 h-2 drop-shadow-2xl 2xl:font  2xl:text-lg   xl:text-md no-underline 2xl:w-50 2xl:p-5 xl:w-50 xl:p-5 p-3 rounded-md text-xs`} href='#civil' ><h2>Civil</h2></a>
                         <a className= {`text-center bg-${colorNav} flex items-center justify-center text-white opacity-70 font-medium 2xl:h-10 xl:h-10 h-2 drop-shadow-2xl 2xl:font  2xl:text-lg   xl:text-md no-underline 2xl:w-50 2xl:p-5 xl:w-50 xl:p-5 p-3 rounded-md text-xs`} href='#familia' ><h2>Familiar</h2></a>
                         <a className= {`text-center bg-${colorNav} flex items-center justify-center text-white opacity-70 font-medium 2xl:h-10 xl:h-10 h-2 drop-shadow-2xl 2xl:font  2xl:text-lg   xl:text-md no-underline 2xl:w-50 2xl:p-5 xl:w-50 xl:p-5 p-3 rounded-md text-xs`} href='#laboral' ><h2>Contacto</h2></a>
          
-
                     </div>
 
 
