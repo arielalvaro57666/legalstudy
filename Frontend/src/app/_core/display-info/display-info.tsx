@@ -37,8 +37,8 @@ export function DisplayInfo({section, selection}: IRequestDisplay, ){
         
         for (let option of information.options){
             
-            let button: JSX.Element = <OptionButton option={option} handleChange={handleChange}/>;
-            components.push(button)
+            let buttonElem: JSX.Element = <OptionButton option={option} handleChange={handleChange}/>;
+            components.push(buttonElem)
 
         }
   

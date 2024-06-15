@@ -1,7 +1,8 @@
-export interface MessageProp{
-    message: Message
+export interface Message{
+    message: MessageData
 }
 
-export interface Message{
+export interface MessageData{
+    from?: string
     text: string
 }

@@ -3,7 +3,7 @@ import { JsxElement } from "typescript"
 
 //recibe una lista con componentes y simplemente regresa un componente que los mapea
 interface Icomponent{
-    components: JSX.Element[]
+    components: (JSX.Element | null)[];
 }
 
 export function ComponentMap({components}: Icomponent){
