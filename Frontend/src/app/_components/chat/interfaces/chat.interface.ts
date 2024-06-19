@@ -1,8 +1,5 @@
-export interface Message{
-    message: MessageData
-}
 
-export interface MessageData{
+export interface Message{
     from?: string
     text: string
 }

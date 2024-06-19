@@ -48,33 +48,22 @@ class MonthLastDaysCalculo(DateCalculoStrategy):
 
 class SemesterWorkedDaysCalculo(DateCalculoStrategy):
     name = "semesterWorkedDays"
-    
+
     def calculate(self, initialDate, finalDate):
         floorDate = initialDate
         roofDate = finalDate
         
-        if(initialDate.year == finalDate.year):
-            
-            if (initialDate.month < 7 and initialDate.month >= 7):
-                
-                floorDate = convertToDate(f"{initialDate.year}-7-1") 
-                    
+
+        if ( initialDate.month < 7 ):
+            floorDate = convertToDate(f'{finalDate.year}-1-1')
         else:
+            floorDate = convertToDate(f'{finalDate.year}-6-30')
 
-            if (finalDate.month < 7):
-                
-                floorDate = convertToDate(f"{initialDate.year}-1-1") 
-            
-            else:
-
-                floorDate = convertToDate(f"{initialDate.year}-7-1") 
-
-            
         
         return (roofDate - floorDate).days
 
+
 class YearsDaysCalculo(DateCalculoStrategy):
-    
     name = "actualYearDays"
     
     def calculate(self, initialDate, finalDate):
@@ -86,6 +75,7 @@ class Date():
     results = {}
 
     def __init__(self, initialDate:str , finalDate:str, strategies: list[DateCalculoStrategy]) -> None:
+        print(initialDate, finalDate, "<--------")
         self.initialDate = convertToDate(initialDate)
         self.finalDate = convertToDate(finalDate)
         self._strategies = strategies

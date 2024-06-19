@@ -7,9 +7,11 @@ class WebSocketService{
     Websocket: WebSocket | null = null
     messageHandler: TSocketMessageHandler | null = null 
 
-    SetSocket(url:string, message_handler: TSocketMessageHandler){
-        this.Websocket = new WebSocket(url)
+    
+    SetSocket(url:string, room_uuid:string, message_handler: TSocketMessageHandler){
         
+        this.Websocket = new WebSocket(`${url}/${room_uuid}/`)
+
         this.Websocket.onopen = this.socketOnOpen
         this.Websocket.onmessage = this.socketOnMessage
         this.Websocket.onerror = this.socketOnError
@@ -31,6 +33,7 @@ class WebSocketService{
 
     socketOnMessage = (response: MessageEvent) => {
         let data = JSON.parse(response.data) 
+        console.log(data)
         this.messageHandler!(data.message)
     }
 

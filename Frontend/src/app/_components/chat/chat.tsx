@@ -2,43 +2,50 @@
 import React, { KeyboardEvent, useContext, useEffect, useRef, useState } from "react"
 import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/io'
 import { BiSend } from "react-icons/bi";
-import { Message, MessageData } from "./interfaces/chat.interface";
+import { Message} from "./interfaces/chat.interface";
 import DataServiceContext from "@/app/_core/services/dataService";
 import { Socket } from "dgram";
 import { JsxElement } from "typescript";
 import { messageType } from "./enums/chat.enum";
 import { ComponentMap } from "@/app/_core/component-map/component-map";
 import WebSocketServiceContext from "@/app/_core/services/websocketService";
-
-
+import { v4 as uuidv4 } from "uuid"
+import "./chat.css"
 
 export default function Chat(){
-
+    const CHAT_UUID = uuidv4()
     const data_service = useContext(DataServiceContext)
     const websocket_service = useContext(WebSocketServiceContext)
     
+    const mainRef = useRef<HTMLElement>(null)
     const inputMessageRef = useRef<HTMLInputElement>(null)
     
     const [open, setOpen] = useState<boolean>(false)
 
-    const [Messages, setMessages] = useState<(JSX.Element | null)[]>([]);
+    const [messages, setmessages] = useState<(JSX.Element | null)[]>([]);
 
+    useEffect(()=>{
+        // Scroll down if new message or open chat
+        if(mainRef.current){
+            mainRef.current!.scrollTop = mainRef.current!.scrollHeight;
+        }
+        
+    },[messages, open])
 
     useEffect(() => {
-
+        // Set open depending on screen width
+        if (innerWidth >= 1024 ){
+            setOpen(true)
+        }
         initializeWebSocket()
-
     },[])
     
     //Functions
     const initializeWebSocket = () => {
-        const url: string = `${data_service.ws_backend}/socket`
-
-        websocket_service.SetSocket(url, generateMessage)
-
+        websocket_service.SetSocket(data_service.ws_backend, CHAT_UUID, generateMessage)
     }    
 
-    const generateMessage = (message: MessageData) => {
+    const generateMessage = (message: Message) => {
         
         
         let messageElem: JSX.Element | null = null
@@ -51,17 +58,14 @@ export default function Chat(){
             messageElem = <ClientMsg text={message.text}/>
         }
         
-        setMessages( prevMessages => [...prevMessages, messageElem])
+        setmessages( prevmessages => [...prevmessages, messageElem])
     }
     
     const sendMessage = (text: string) => {
 
         let message: Message = {
-            message:{
-                from: messageType.Client,
-                text: text
-            }
-
+            from: messageType.Client,
+            text: text
         }
 
         websocket_service.socketSendData(message)
@@ -72,20 +76,26 @@ export default function Chat(){
 
 
     const handleInput = () => {
-
+        
         let text  = inputMessageRef.current!.value
 
-        text !== "" ? sendMessage(inputMessageRef.current!.value) : inputMessageRef.current!.value = ''
+        if (text !== ""){
+            sendMessage(inputMessageRef.current!.value)
+        }
+
+        inputMessageRef.current!.value = ''
+        
+        
 
     }
 
 
 
     return(
-        <section className="fixed bottom-0 z-50 w-full lg:w-[30rem] lg:right-3">
+        <section className={` ${open ? 'slide-up h-full': 'h-auto'} w-full z-50 fixed bottom-0 lg:right-3 lg:w-[27rem] lg:h-auto `}>
 
             {/* Head */}
-            <header className={`${open ? 'h-20' : 'h-10'} w-full bg-stone-900 flex items-center p-7 gap-4 relative`}>
+            <header className={` ${open ? "h-[10%]" : "h-10"} w-full bg-stone-900 flex items-center p-7 gap-4 lg:h-12 `}>
                 <div className="w-10 h-10 rounded-full bg-red-50">
                     <img></img>
                 </div>
@@ -101,13 +111,15 @@ export default function Chat(){
                 
             </header>
             {/* Body */}
-            <main className={`w-full ${open ? 'h-[30rem]': 'hidden'} bg-zinc-800 p-4 overflow-scroll`}>
-                <ComponentMap components={Messages}/>
+            
+            {open ?
+            <main className={`w-full lg:h-96 h-[85%] bg-zinc-800 p-4 overflow-scroll`} ref={mainRef}>
+                <ComponentMap components={messages}/>
                 
-            </main>
+            </main> : null}
 
-
-            <footer className={`w-full bg-zinc-800 flex items-center ${open ? 'h-full': 'hidden'}`}>
+            {open ?
+            <footer className={`h-[5%] w-full bg-zinc-800 flex items-center lg:h-9`}>
                 <input type="text" className="w-[90%] h-full bg-zinc-800 text-white opacity-80 text-lg border-2 border-zinc-900 px-2" ref={inputMessageRef} 
                 onKeyDown={(e)=>{ if (e.key === "Enter"){ handleInput() }
                 }}/>
@@ -118,7 +130,7 @@ export default function Chat(){
                 </div>
 
   
-            </footer>
+            </footer>: null}
 
 
 
@@ -128,7 +140,7 @@ export default function Chat(){
 }
 
 
-function AdmingMsg(message: MessageData){
+function AdmingMsg(message: Message){
     return(
         <> 
             <div className="flex w-2/3 justify-start mb-6 text-white break-all">
@@ -137,7 +149,7 @@ function AdmingMsg(message: MessageData){
         </>
     )
 }
-function ClientMsg(message: MessageData){
+function ClientMsg(message: Message){
     return(
         <>
             <div className="w-full flex justify-end">

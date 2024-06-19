@@ -13,16 +13,16 @@ module.exports = {
       keyframes: {
         appear: {
           "0%":{
-            opacity: "0%"
+            bottom: "1000px"
           },
           "50%":{
-            opacity: "50%"
+            bottom: "1500px"
           },
           "75%":{
-            opacity: "75%"
+            bottom: "45%"
           },
           "100%":{
-            opacity: "100%"
+            bottom: "100%"
           },
         }
       },

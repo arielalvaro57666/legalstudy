@@ -1,0 +1,21 @@
+@keyframes slideup {
+    0% {
+      transform: translateY(90%);
+    }
+    50% {
+      transform: translateY(50%);
+    }
+    75% {
+      transform: translateY(25%);
+    }
+    100% {
+      transform: translateY(0%);
+    }
+}
+  
+.slide-up {
+    animation: slideup 0.5s linear !important;
+}
+  
+
+  

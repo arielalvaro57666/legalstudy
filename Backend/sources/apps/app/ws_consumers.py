@@ -1,75 +1,121 @@
 import json 
+import uuid
 
-from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 
+from .enums import WSMessageType, WSUserType, WSMClientState
+from .constants import WSRequestMessages
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 class ChatConsumer(AsyncWebsocketConsumer):
-    async def connect(self):
-        self.room_group_name = 'test'
-        self.user = {
-            'name': None,
-            'age': None,
-        }
-        await self.channel_layer.group_add(
-            self.room_group_name,
-            self.channel_name
-        )
-        await self.accept()
-        await self.send_initial_message()
 
-    async def send_initial_message(self):
-        if not self.user['name']:
-            await self.send(text_data=json.dumps({
-                'type': 'chat',
-                'message': 'Hola! ¿Cuál es tu nombre?'
-            }))
-        elif not self.user['age']:
-            await self.send(text_data=json.dumps({
-                'type': 'chat',
-                'message': f'Hola {self.user["name"]}! ¿Cuántos años tienes?'
-            }))
+    client_type: str
+
+    client_data = {
+        "name": None,
+        "cellphone": None
+    }
+    # user_role: str = ""
+
+    client_request_state = WSMClientState.NameReq
+
+    # The conecction is made and the client will have 
+
+
+    def generate_message(self, message_type: str, user_type: str, text: str):
+        return json.dumps({"type": message_type, "message":{"from": user_type, "text": text}}, ensure_ascii=False)
+
+
+    def check_request(self, data):
+        
+        if (self.client_request_state == WSMClientState.NameReq and self.client_data["name"] == None):
+            
+
+            if (data["text"] == ""):
+                return True
+            
+            self.client_data["name"] = data["text"]
+
+        if (self.client_request_state == WSMClientState.CellphoneReq and self.client_data["cellphone"] == None):
+            
+
+            if (data["text"] == "" or len(data["text"]) < 4):
+                return True
+            
+            self.client_data["cellphone"] = data["text"]
+            
+        return False
+    
+    async def connect(self):
+
+        id = self.scope['url_route']['kwargs']['room_uuid']
+        self.room_group_name = id
+        
+
+        await self.channel_layer.group_add(self.room_group_name,self.channel_name)
+
+        await self.accept()
+
+        # Verificar si el usuario está autenticado
+        # if self.scope["user"].is_authenticated:
+        #     user_role = 'admin'
+        # else:
+        #     user_role = 'cliente'
+        # print("SE CONECTO\n")
+        # await self.send(text_data=json.dumps({
+        #     'message': f'You are connected as {user_role} to group {self.room_group_name}',
+        #     'role': user_role,
+        #     'group': self.room_group_name
+        # }))
+        await self.set_request()
+
+
+
+    async def set_request(self, error = False):
+        message = ""
+
+        if (self.client_data["name"] == None):
+
+            self.client_request_state = WSMClientState.NameReq
+            
+            message = WSRequestMessages.NAME if (not error) else WSRequestMessages.NAME_ERROR
+            
+        elif (self.client_data["cellphone"] == None):
+
+            self.client_request_state = WSMClientState.CellphoneReq
+
+            message = WSRequestMessages.CELLPHONE if (not error) else WSRequestMessages.CELLPHONE_ERROR
+
         else:
-            await self.send(text_data=json.dumps({
-                'type': 'chat',
-                'message': f'Bienvenido {self.user["name"]}! Ya puedes empezar a chatear.'
-            }))
+
+            self.client_request_state = WSMClientState.Done
+
+            message = WSRequestMessages.DONE
+
+        await self.send(text_data=self.generate_message(WSMessageType.Request ,WSUserType.Admin, message))
+
 
     async def receive(self, text_data):
-        message = text_data.strip()
+       
+        data = json.loads(text_data)
 
-        if not self.user['name']:
-            self.user['name'] = message
-            await self.send_initial_message()
-        elif not self.user['age']:
-            try:
-                age = int(message)
-                if age < 0:
-                    raise ValueError('La edad debe ser un número positivo.')
-                self.user['age'] = age
-                await self.send_initial_message()
-            except ValueError as e:
-                await self.send(text_data=json.dumps({
-                    'type': 'chat',
-                    'message': str(e) + ' Por favor, ingresa una edad válida.'
-                }))
+        print("------------ ",data)
+
+        #if client and not Done => Send client message and Send Request NoRoom
+        if(data["from"] == WSUserType.Client and self.client_request_state != WSMClientState.Done):
+     
+            await self.send(text_data=self.generate_message(WSMessageType.Chat ,data["from"], data["text"]))
+            error = self.check_request(data)
+            await self.set_request(error)
+    
         else:
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                {
-                    'type': 'chat.message',
-                    'message': message,
-                    'user_name': self.user['name']
-                }
-            )
+            #Room message
+            await self.channel_layer.group_send(self.room_group_name, {"type": "chat_message", "message": data})
+
 
     async def chat_message(self, event):
-        message = event['message']
-        user_name = event['user_name']
-
-        await self.send(text_data=json.dumps({
-            'type': 'chat',
-            'message': f'{user_name}: {message}'
-        }))
+        message = self.generate_message(WSMessageType.Chat, event["message"]["from"], event["message"]["text"])
+        #message = {"type": "chat", "message": event["message"]}
+        print(event["message"]["from"], event["message"]["text"])
+        await self.send(text_data=message)

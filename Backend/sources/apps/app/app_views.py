@@ -5,8 +5,12 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from .controllers.execute import processCalculo
-# Create your views here.
 
+#Models
+from . import models
+from . import app_serializers
+# Create your views here.
+ 
 
 class Calculo(RetrieveAPIView):
 
@@ -23,4 +27,8 @@ class Calculo(RetrieveAPIView):
             pass
 
 
+class Chat(ModelViewSet):
+    lookup_field = "id"
+    queryset = models.Chat.objects.all()
+    serializer_class = app_serializers.ChatSerializer
 

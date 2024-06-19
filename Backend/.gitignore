@@ -1,10 +1,11 @@
 # Ignorar la carpeta env y su contenido
 env/
-
+sources/apps/*/migrations
+sources/db.sqlite3
 # Files -------------------------------
 .env
 *.pyc
 *.orig
 *.pdf
 uwsgi.log
-sources/db.sqlite3
+

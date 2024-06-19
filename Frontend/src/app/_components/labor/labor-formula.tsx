@@ -11,19 +11,7 @@ export function Indemnization(){
 
     const [calculated, setCalculated] = useState(false)
     const [results, setResults] = useState<ICompensationResponse | null>(null)
-    const [windowWidth, setWindowWith] = useState(window.innerWidth)
-
-    useEffect(() => {
-        const handleResponsive = () => {
-            console.log(window.innerWidth)
-            setWindowWith(window.innerWidth)
-        }
-        window.addEventListener('resize', handleResponsive);
-
-        return () => {
-            window.removeEventListener('resize', handleResponsive);
-        };
-    })
+    
 
     useEffect(()=> {
 
@@ -66,11 +54,11 @@ export function CompensationForm({handleResults}: ICompensationFormProp){
 
     //TODO: Cambiar esto a algo mas centralizado y accesible en vez de llamar siempre a setUrl
     const url = data_service.setUrl("calculo")
-
+    console.log("##########3, u",url)
     const [formErrors, setFormErrors] = useState<IFormError>({dateError:'',salaryError:''})
 
     const requestCalculo = async (data: any) => {
-        
+        console.log("########## data -> ",data)
         const requestData = labor_service.processData(data)
         const options: IHttpOptions =  http_service.generateOptions(url, requestData) 
         const response = await http_service.request('POST', options)
