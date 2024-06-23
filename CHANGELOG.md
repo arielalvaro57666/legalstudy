@@ -1,3 +1,12 @@
+## [0.0.3] - 2024-6-23
+Frontend
+- Remake of chat component
+- Centralized websocket configuration
+Backend
+- Websocket configuration for Django
+- Websocket consumer for the chat
+- Chat model for saving websocket IDs
+
 ## [0.0.2] - 2024-5-21
 ### Added
 Frontend

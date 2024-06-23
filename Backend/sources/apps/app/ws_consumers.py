@@ -56,7 +56,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_add(self.room_group_name,self.channel_name)
 
         await self.accept()
-
+        #TODO Check if it is a admin or a client
         # Verificar si el usuario está autenticado
         # if self.scope["user"].is_authenticated:
         #     user_role = 'admin'
@@ -70,7 +70,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # }))
         await self.set_request()
 
-
+    async def disconnect(self, code):
+        print("hi ",self.room_group_name)
+        #TODO Make chat save status close (if is a client)
 
     async def set_request(self, error = False):
         message = ""

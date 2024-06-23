@@ -4,7 +4,7 @@ import { init } from "aos";
 import { FormError } from "../enums/labor.enum";
 
 
-export class LaborService{
+class LaborService{
  
 
     processData(data: any){

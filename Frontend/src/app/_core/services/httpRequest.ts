@@ -5,10 +5,10 @@ import { IHttpOptions } from "../interfaces/core.interface";
 class httpRequestService{
 
 
-    generateOptions(url: string, paramas: any = {} ){
+    generateOptions<T = {}>(url: string, params: T ){
         const options : IHttpOptions = {
             url: url,
-            params: paramas
+            params: params
         }
 
         return options

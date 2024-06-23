@@ -2,7 +2,7 @@
 import React, { KeyboardEvent, useContext, useEffect, useRef, useState } from "react"
 import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/io'
 import { BiSend } from "react-icons/bi";
-import { Message} from "./interfaces/chat.interface";
+import {IChat, IMessage} from "./interfaces/chat.interface";
 import DataServiceContext from "@/app/_core/services/dataService";
 import { Socket } from "dgram";
 import { JsxElement } from "typescript";
@@ -11,11 +11,17 @@ import { ComponentMap } from "@/app/_core/component-map/component-map";
 import WebSocketServiceContext from "@/app/_core/services/websocketService";
 import { v4 as uuidv4 } from "uuid"
 import "./chat.css"
+import httpRequestContext from "@/app/_core/services/httpRequest";
+import { IHttpOptions } from "@/app/_core/interfaces/core.interface";
+import chatServiceContext from "./services/chat.service";
 
 export default function Chat(){
-    const CHAT_UUID = uuidv4()
     const data_service = useContext(DataServiceContext)
     const websocket_service = useContext(WebSocketServiceContext)
+    const api_service = useContext(httpRequestContext)
+    const chat_service = useContext(chatServiceContext)
+
+    const url = data_service.setUrl("chats/")
     
     const mainRef = useRef<HTMLElement>(null)
     const inputMessageRef = useRef<HTMLInputElement>(null)
@@ -37,15 +43,28 @@ export default function Chat(){
         if (innerWidth >= 1024 ){
             setOpen(true)
         }
+
+        chat_service.generateUUID()
         initializeWebSocket()
+        saveChat()
+        
     },[])
     
     //Functions
     const initializeWebSocket = () => {
-        websocket_service.SetSocket(data_service.ws_backend, CHAT_UUID, generateMessage)
+        websocket_service.SetSocket(data_service.ws_backend, localStorage.getItem("chat_uuid")! , generateMessage)
     }    
 
-    const generateMessage = (message: Message) => {
+    const saveChat = () => {
+        const chat: IChat = {
+            roomID: localStorage.getItem("chat_uuid")!
+        }
+        const options: IHttpOptions = api_service.generateOptions<IChat>(url, chat) 
+
+        api_service.request("POST", options)
+    }
+
+    const generateMessage = (message: IMessage) => {
         
         
         let messageElem: JSX.Element | null = null
@@ -63,7 +82,7 @@ export default function Chat(){
     
     const sendMessage = (text: string) => {
 
-        let message: Message = {
+        let message: IMessage = {
             from: messageType.Client,
             text: text
         }
@@ -140,7 +159,7 @@ export default function Chat(){
 }
 
 
-function AdmingMsg(message: Message){
+function AdmingMsg(message: IMessage){
     return(
         <> 
             <div className="flex w-2/3 justify-start mb-6 text-white break-all">
@@ -149,7 +168,7 @@ function AdmingMsg(message: Message){
         </>
     )
 }
-function ClientMsg(message: Message){
+function ClientMsg(message: IMessage){
     return(
         <>
             <div className="w-full flex justify-end">

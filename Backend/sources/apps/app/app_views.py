@@ -11,7 +11,7 @@ from . import models
 from . import app_serializers
 # Create your views here.
  
-
+## Calculo Views
 class Calculo(RetrieveAPIView):
 
     def post(self, request):
@@ -26,9 +26,11 @@ class Calculo(RetrieveAPIView):
             #Do logger class for this
             pass
 
-
+## Chat Views
 class Chat(ModelViewSet):
     lookup_field = "id"
     queryset = models.Chat.objects.all()
     serializer_class = app_serializers.ChatSerializer
+
+    #Mixin allow us to CRUD with the serializer 
 
