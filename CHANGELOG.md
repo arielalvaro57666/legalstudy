@@ -1,3 +1,5 @@
+## [0.0.4] - ?
+
 ## [0.0.3] - 2024-6-23
 Frontend
 - Remake of chat component
