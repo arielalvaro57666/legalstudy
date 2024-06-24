@@ -8,8 +8,9 @@ from rest_framework import status
 from . import serializers
 from rest_framework.authtoken.models import Token
 from django.shortcuts import get_object_or_404
+from .auth_utils import token_handler
 class AuthViewSet(GenericViewSet):
-    pass
+
 
     @action(methods=["POST"], detail=False, permission_classes = [AllowAny])
     def login(self, request):
@@ -21,6 +22,10 @@ class AuthViewSet(GenericViewSet):
                 return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
             
             token, created = Token.objects.get_or_create(user=user)
+            
+            #Renew if expired token
+            if (created == False):
+                token = token_handler(token)
 
             serializer = serializers.UserSerializer(instance=user)
             print(token)
@@ -30,7 +35,7 @@ class AuthViewSet(GenericViewSet):
             print(e)
             return Response({"detail": "Bad request"}, status=status.HTTP_400_BAD_REQUEST)
     
-
+    
     @action(methods=["POST"], detail=False, permission_classes = [AllowAny])
     def test_token(self, request):
         pass

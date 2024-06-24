@@ -135,7 +135,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+# Authentication Token
+TOKEN_EXPIRATION_DAYS = 1
 
 # ---------------------------------CHANNEL---------------------------------
 
