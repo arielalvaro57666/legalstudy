@@ -3,7 +3,7 @@ import { FormEvent, useContext, useEffect, useState } from "react";
 import { ICompensationResultsProp, ICompensationRequest, ICompensationResponse, IFormCompensation, ICompensationFormProp, IFormError } from "./interfaces/labor.interface";
 import httpRequestContext from "@/app/_core/services/httpRequest";
 import DataServiceContext from "@/app/_core/services/dataService";
-import { IHttpOptions } from "@/app/_core/interfaces/core.interface";
+import { IHTTPresponse, IHttpOptions } from "@/app/_core/interfaces/core.interface";
 import laborServiceContext from "./services/labor.service";
 
 
@@ -61,10 +61,15 @@ export function CompensationForm({handleResults}: ICompensationFormProp){
         console.log("########## data -> ",data)
         const requestData = labor_service.processData(data)
         const options: IHttpOptions =  http_service.generateOptions(url, requestData) 
-        const response = await http_service.request('POST', options)
+        const [status,response] = await http_service.request('POST', options)
         console.log(response)
         // if everything went correct
-        handleResults(response)
+        if(status != 200){
+            //toast warning logic
+            return
+        }
+
+        handleResults(response.data)
 
     }
 

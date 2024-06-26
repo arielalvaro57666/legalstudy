@@ -14,27 +14,32 @@ class httpRequestService{
         return options
     }
  
-    async request(method: string, options: IHttpOptions){
+    async request(method: string, options: IHttpOptions): Promise<[number, any]>{
 
         let settings: any = {
             method: method,
-            headers: {"Content-Type": "application/json"},
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: 'include'
         }
 
         if (method === 'POST'){
             settings.body = JSON.stringify(options.params)
         }
 
-
+        
         try{
             const response = await fetch(options.url, settings)
+            const status = response.status
             const data = await response.json()
             
-            return data
+            
+
+            return [status,data]
     
         } catch (error){
-    
-            console.log(error)
+            return [500, { error: 'Internal Server Error' }];
         }
     }
 }

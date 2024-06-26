@@ -49,7 +49,7 @@ INSTALLED_APPS = [
 
 ASGI_APPLICATION = 'project.asgi.application'
 
-CORS_ORIGIN_ALLOW_ALL = True
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -138,6 +138,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Authentication Token
 TOKEN_EXPIRATION_DAYS = 1
 
+#CORS
+
+# CORS_ALLOW_CREDENTIALS = True
+# CORS_ORIGIN_ALLOW_ALL = True
 # ---------------------------------CHANNEL---------------------------------
 
 
@@ -145,7 +149,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [('localhost', 6379)],
+            'hosts': [('redis', 6379)],
         },
         # 'ROUTING': 'backend.routing.channel_routing',
     }
@@ -156,3 +160,6 @@ CHANNEL_LAYERS = {
 LOGS = {
     "PATH": os.path.join(BASE_DIR, "logs")
 }
+
+SESSION_COOKIE_SECURE = False  # Puede ser False en desarrollo
+CSRF_COOKIE_SECURE = False  

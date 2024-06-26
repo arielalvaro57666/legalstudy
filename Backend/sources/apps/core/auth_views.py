@@ -9,6 +9,16 @@ from . import serializers
 from rest_framework.authtoken.models import Token
 from django.shortcuts import get_object_or_404
 from .auth_utils import token_handler
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
+from django.http import Http404
+class TokenAuthCookie(TokenAuthentication):
+    def authenticate(self, request):
+        if ("tkv1" in request.COOKIES) and 'HTTP_AUTHORIZATION' not in request.META:
+            return self.authenticate_credentials(request.COOKIES.get('tkv1'))
+
+        return super().authenticate(request)
+
 class AuthViewSet(GenericViewSet):
 
 
@@ -17,7 +27,7 @@ class AuthViewSet(GenericViewSet):
         try:
                 
             user = get_object_or_404(User, username = request.data["username"])
-
+            
             if not user.check_password(request.data["password"]):
                 return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
             
@@ -28,14 +38,27 @@ class AuthViewSet(GenericViewSet):
                 token = token_handler(token)
 
             serializer = serializers.UserSerializer(instance=user)
-            print(token)
-            return Response({"token": token.key, "user": serializer.data})
-    
+        
+            response = Response({"token": token.key, "user": serializer.data})
+
+            response.set_cookie(
+                key='tkv1',
+                value=token.key,
+                max_age=3600,  # Duración de la cookie en segundos (1 hora en este caso)
+                httponly=True,  # Accesible solo a través de HTTP
+                secure=False,
+                samesite='lax'
+            )
+            return response
+        
+        except Http404:
+                return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+        
         except Exception as e:
-            print(e)
+            print("###",e)
             return Response({"detail": "Bad request"}, status=status.HTTP_400_BAD_REQUEST)
     
     
-    @action(methods=["POST"], detail=False, permission_classes = [AllowAny])
-    def test_token(self, request):
-        pass
+    @action(methods=["GET"], detail=False, authentication_classes = [SessionAuthentication, TokenAuthCookie],permission_classes = [IsAuthenticated])
+    def verify(self, request):
+        return Response({"detail":"Valid token."}, status = status.HTTP_200_OK)

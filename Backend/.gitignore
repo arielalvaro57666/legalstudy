@@ -9,3 +9,4 @@ sources/db.sqlite3
 *.pdf
 uwsgi.log
 
+test.rest

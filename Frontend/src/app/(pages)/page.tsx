@@ -1,18 +1,18 @@
 "use client"
 // import '../style/home.css'
 import React, { useState } from 'react'
-import Header from '../../_components/header/header'
-import Laboral from '../../_components/labor/labor'
-import Civil from '../../_components/civil/civil'
+import Header from '@/app/_components/header/header'
+import Laboral from '@/app/_components/labor/labor'
+import Civil from '@/app/_components/civil/civil'
 
-import ChatBox from '../../_components/chat/chat'
-import Footer from '../../_components/footer/footer'
+import ChatBox from '@/app/_components/chat/chat'
+import Footer from '@/app/_components/footer/footer'
 import Navbar from '@/app/_components/navbar/navbar'
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import Family from '@/app/_components/family/Familiar'
-import Chat from '../../_components/chat/chat'
+import Chat from '@/app/_components/chat/chat'
 
 import { ComponentMap } from '@/app/_core/component-map/component-map'
 
