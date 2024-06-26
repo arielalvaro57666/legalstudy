@@ -21,7 +21,7 @@ export default function Chat(){
     const api_service = useContext(httpRequestContext)
     const chat_service = useContext(chatServiceContext)
 
-    const url = data_service.setUrl("chats/")
+    const url = data_service.setUrl("chat_create")
     
     const mainRef = useRef<HTMLElement>(null)
     const inputMessageRef = useRef<HTMLInputElement>(null)

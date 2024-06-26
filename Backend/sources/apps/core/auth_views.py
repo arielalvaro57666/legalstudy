@@ -14,9 +14,11 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 from django.http import Http404
 class TokenAuthCookie(TokenAuthentication):
     def authenticate(self, request):
-        if ("tkv1" in request.COOKIES) and 'HTTP_AUTHORIZATION' not in request.META:
-            return self.authenticate_credentials(request.COOKIES.get('tkv1'))
 
+        if ("tkv1" in request.COOKIES) and 'HTTP_AUTHORIZATION' not in request.META:
+            
+            return self.authenticate_credentials(request.COOKIES.get('tkv1'))
+        
         return super().authenticate(request)
 
 class AuthViewSet(GenericViewSet):
@@ -44,8 +46,8 @@ class AuthViewSet(GenericViewSet):
             response.set_cookie(
                 key='tkv1',
                 value=token.key,
-                max_age=3600,  # Duración de la cookie en segundos (1 hora en este caso)
-                httponly=True,  # Accesible solo a través de HTTP
+                max_age=60*60*24*6,  # 6 days valid
+                httponly=True,  
                 secure=False,
                 samesite='lax'
             )

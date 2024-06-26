@@ -1,9 +1,16 @@
-import Login from "@/app/_components/admin/login/login";
+// import { Dashboard } from "@/app/_components/admin/dashboard/dashboard";
+"use client"
+import withAuth from "@/app/_components/admin/Auth/withAuth"
 
-export default function AdminDashboard(){
+
+
+function Dashboard(){
     return(
         <>
-            <Login/>
+            <h1>hola</h1>
+
         </>
     )
 }
+
+export default withAuth(Dashboard)

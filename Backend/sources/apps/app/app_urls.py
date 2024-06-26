@@ -5,9 +5,8 @@ from . import app_views
 
 router = routers.DefaultRouter()
 
-router.register('chats', app_views.Chat, basename="chats")
-
 urlpatterns = [
-    path('calculo', app_views.Calculo.as_view(), name='calculo')
+    path('calculo', app_views.Calculo.as_view(), name='calculo'),
+    path('chat_create', app_views.ChatCreateAPIView.as_view(), name='chatcreate')
 ]
 

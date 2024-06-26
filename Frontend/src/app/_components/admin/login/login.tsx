@@ -1,12 +1,13 @@
 'use client'
 import DataServiceContext from "@/app/_core/services/dataService"
 import httpRequestContext from "@/app/_core/services/httpRequest"
-import { FormEvent, useContext } from "react"
+import { FormEvent, useContext, useEffect } from "react"
 import loginServiceContext from "./services/login.service"
 import { IHttpOptions } from "@/app/_core/interfaces/core.interface"
 import { IRequestUser } from "./interfaces/login.interface"
 
 import { useRouter } from "next/navigation"
+import { Loading } from "@/app/_core/components/loading/loading"
 
 export default function Login() {
     const api_service = useContext(httpRequestContext)
@@ -28,9 +29,10 @@ export default function Login() {
         }
         
         if(status === 200){
-            router.push("/dashboard")
+            router.push("/admin/dashboard")
         }
     }
+
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()

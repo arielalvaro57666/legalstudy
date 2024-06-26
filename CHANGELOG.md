@@ -1,4 +1,15 @@
-## [0.0.4] - ?
+## [0.0.4] - 2024-6-26
+Frontend
+- Admin routes (Login Page Done)
+- Authentication logic for protected routes with HOC 
+- Credentials include httprequest for sending cookie back to authentication 
+Backend
+- Simple Authentication Token stored in database 
+- Login logic
+- Renew token if expired (not refresh token traditional)
+- Veifiy endpoint for initial authentication
+- Token authentication class overwrite for cookie token check
+- Modified views with permission and authentication classes
 
 ## [0.0.3] - 2024-6-23
 Frontend
