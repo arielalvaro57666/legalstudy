@@ -19,9 +19,21 @@ class ChatRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Chat
         fields = ["roomID"]
-        depth = 1
+    
 
+class ChatAdminRetrieveSerializer(ChatRetrieveSerializer):
 
+    class Meta:
+        fields = '__all__'
 
+class MessageSerializer(serializers.ModelSerializer):
 
-    #     
+    class Meta:
+        model = models.Message
+        fields = ["text", "chat"]
+
+class ClientSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Client
+        fields = ["name", "cellphone", "chat"]

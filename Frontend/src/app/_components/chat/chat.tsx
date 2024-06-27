@@ -66,7 +66,7 @@ export default function Chat(){
     
             return null
         }
-
+        console.log(response.roomID)
         initializeWebSocket(response.roomID)
     }
 
@@ -76,11 +76,11 @@ export default function Chat(){
         
         let messageElem: JSX.Element | null = null
 
-        if (message.from === messageType.Admin){
+        if (message.user_type === messageType.Admin){
             messageElem = <AdmingMsg text={message.text}/>
         }
 
-        if (message.from === messageType.Client){
+        if (message.user_type === messageType.AnonymousUser){
             messageElem = <ClientMsg text={message.text}/>
         }
         
@@ -90,7 +90,6 @@ export default function Chat(){
     const sendMessage = (text: string) => {
 
         let message: IMessage = {
-            from: messageType.Client,
             text: text
         }
 

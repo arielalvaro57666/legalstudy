@@ -1,6 +1,6 @@
 import { createContext } from "react"
 import { TSocketMessageHandler } from "../interfaces/core.interface"
-import { Message } from "@/app/_components/chat/interfaces/chat.interface"
+import { IMessage } from "@/app/_components/chat/interfaces/chat.interface"
 
 class WebSocketService{
 
@@ -22,7 +22,7 @@ class WebSocketService{
     }
 
     // Make send data method 
-    socketSendData = (message: Message) => {
+    socketSendData = (message: IMessage) => {
         let data = JSON.stringify(message)
         this.Websocket?.send(data)
     }

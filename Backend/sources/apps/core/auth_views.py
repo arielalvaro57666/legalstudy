@@ -12,6 +12,8 @@ from .auth_utils import token_handler
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from django.http import Http404
+
+
 class TokenAuthCookie(TokenAuthentication):
     def authenticate(self, request):
 

@@ -1,6 +1,6 @@
 
 export interface IMessage{
-    from?: string
+    user_type?: string
     text: string
 }
 

@@ -1,4 +1,11 @@
 ## [0.5] - ?
+Frontend
+- Chat creation returns uuid4 as Response and then set the socket conection
+Backend
+- Websocket TokenAuthMiddleware routing 
+- Websocket chatConsumer use scope for check the usertype 
+- Websocket Consumer save functions for client, chat status and message data 
+- Transform chat roomID in PK and default uuid4 from model
 
 ## [0.4] - 2024-6-26
 Frontend

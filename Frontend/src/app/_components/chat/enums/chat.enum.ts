@@ -1,5 +1,5 @@
 export enum messageType{
-    Client = 'Client',
+    AnonymousUser = 'AnonymousUser',
     Admin = 'Admin'
 
 }

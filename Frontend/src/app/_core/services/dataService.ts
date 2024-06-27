@@ -2,8 +2,8 @@ import { createContext } from "react"
 
 class DataService{
 
-    url_backend = 'http://192.168.0.75:8088/api/v1/'
-    ws_backend = 'ws://192.168.0.75:8088/ws/chat'
+    url_backend = 'http://localhost:8000/api/v1/'
+    ws_backend = 'ws://localhost:8088/ws/chat'
 
     
     setUrl(url: string){

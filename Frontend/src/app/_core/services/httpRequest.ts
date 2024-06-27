@@ -14,7 +14,7 @@ class httpRequestService{
         return options
     }
  
-    async request(method: string, options: IHttpOptions): Promise<[number, any]>{
+    async request(method: string, options: IHttpOptions, with_credentials: boolean = false): Promise<[number, any]>{
 
         let settings: any = {
             method: method,
@@ -22,6 +22,9 @@ class httpRequestService{
                 "Content-Type": "application/json"
             },
             credentials: 'include'
+        }
+        if (with_credentials === true){
+            settings.credentials = 'include'
         }
 
         if (method === 'POST'){

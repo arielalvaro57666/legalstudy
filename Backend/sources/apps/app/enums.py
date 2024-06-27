@@ -1,6 +1,10 @@
+class ChatStatus:
+    Request = "Request"
+    Open = "Open"
+    Closed = "Closed"
 
 class WSUserType:
-    Client = "Client"
+    AnonymousUser = "AnonymousUser"
     Admin = "Admin"
 
 class WSMessageType:
@@ -9,6 +13,6 @@ class WSMessageType:
     
 
 class WSMClientState:
-    NameReq = "name"
-    CellphoneReq = "cellphone"
+    NameRequest = "name"
+    CellphoneRequest = "cellphone"
     Done = "Done"
