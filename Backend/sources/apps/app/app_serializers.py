@@ -5,10 +5,23 @@ from . import models
 
 # class MessageSerializer(serializers.ModelSerializer)
 
-class ChatSerializer(serializers.ModelSerializer):
+class MessageSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = models.Message
+        fields = ["text", "chatRoom"]
+
+    
+
+class ChatRetrieveSerializer(serializers.ModelSerializer):
 
 
     class Meta:
         model = models.Chat
-        fields = ["roomID", "status", "messages", "client"]
+        fields = ["roomID"]
         depth = 1
+
+
+
+
+    #     

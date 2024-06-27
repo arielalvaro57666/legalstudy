@@ -1,14 +1,14 @@
 from django.db import models
 from apps.core.models import BaseModel
+from uuid import uuid4
 # Create your models here.
 #chat 1----* messages 
 #cliente 1 --- 1 chat
 
 class Chat(BaseModel):
     #Fields
-    roomID = models.UUIDField(unique=True)
+    roomID = models.UUIDField(primary_key=True, unique=True, editable=False, default=uuid4)
     status = models.CharField(max_length=5, default="open")
-
     #Relationships
     #Metadata
     #Methods

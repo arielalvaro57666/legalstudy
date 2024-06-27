@@ -140,8 +140,8 @@ TOKEN_EXPIRATION_DAYS = 6
 
 #CORS
 
-# CORS_ALLOW_CREDENTIALS = True
-# CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
 # ---------------------------------CHANNEL---------------------------------
 
 
@@ -149,7 +149,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [('redis', 6379)],
+            'hosts': [('localhost', 6379)],
         },
         # 'ROUTING': 'backend.routing.channel_routing',
     }

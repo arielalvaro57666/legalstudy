@@ -7,6 +7,7 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     path('calculo', app_views.Calculo.as_view(), name='calculo'),
-    path('chat_create', app_views.ChatCreateAPIView.as_view(), name='chatcreate')
+    path('chat_create', app_views.ChatCreateAPIView.as_view(), name='chatcreate'),
+    path('message_create', app_views.MessageCreateAPIView.as_view(), name='messagereate')
 ]
 

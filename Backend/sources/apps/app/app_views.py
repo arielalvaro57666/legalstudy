@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import RetrieveAPIView, CreateAPIView
 from rest_framework.decorators import action
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .controllers.execute import processCalculo
@@ -30,7 +31,15 @@ class Calculo(RetrieveAPIView):
 
 class ChatCreateAPIView(CreateAPIView):
     permission_classes = [AllowAny]
-    serializer_class = app_serializers.ChatSerializer
+    serializer_class = app_serializers.ChatRetrieveSerializer
+
+        
+
+    
+class MessageCreateAPIView(CreateAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = app_serializers.MessageSerializer
+
 
 class ChatRetrieveAPIView(RetrieveAPIView):
     authentication_classes = [SessionAuthentication, TokenAuthentication]
@@ -38,6 +47,6 @@ class ChatRetrieveAPIView(RetrieveAPIView):
     
     lookup_field = 'id'
     queryset = models.Chat.objects.all()
-    serializer_class = app_serializers.ChatSerializer
+    serializer_class = app_serializers.ChatRetrieveSerializer
 
 

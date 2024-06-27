@@ -44,25 +44,32 @@ export default function Chat(){
             setOpen(true)
         }
 
-        chat_service.generateUUID()
-        initializeWebSocket()
-        saveChat()
+    
+        createChat()
         
     },[])
     
     //Functions
-    const initializeWebSocket = () => {
-        websocket_service.SetSocket(data_service.ws_backend, localStorage.getItem("chat_uuid")! , generateMessage)
+    const initializeWebSocket = (uuid: string) => {
+        websocket_service.SetSocket(data_service.ws_backend, uuid , generateMessage)
     }    
 
-    const saveChat = () => {
-        const chat: IChat = {
-            roomID: localStorage.getItem("chat_uuid")!
-        }
-        const options: IHttpOptions = api_service.generateOptions<IChat>(url, chat) 
 
-        api_service.request("POST", options)
+    const  createChat = async () => {
+
+
+        const options: IHttpOptions = api_service.generateOptions(url, {}) 
+
+        const [status, response] = await api_service.request("POST", options)
+
+        if (status != 201){
+    
+            return null
+        }
+
+        initializeWebSocket(response.roomID)
     }
+
 
     const generateMessage = (message: IMessage) => {
         
