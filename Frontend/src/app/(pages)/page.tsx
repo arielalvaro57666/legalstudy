@@ -1,4 +1,4 @@
-"use client"
+
 // import '../style/home.css'
 import React, { useState } from 'react'
 import Header from '@/app/_components/header/header'
@@ -21,23 +21,17 @@ import { ComponentMap } from '@/app/_core/component-map/component-map'
 
 
 export default function Home() {
-    const [chatOpen, setChatOpen] = useState(false);
 
-
-    const openChat = () => {
-        setChatOpen(!chatOpen);
-    }
 
     return (
         <div className='bg-[#222]'>
             {/*  */}
             <Navbar/>
-            <Header chat={openChat}/>
+            <Header/>
           
             <div className='container mx-auto bg-[#222]'>
-                <LocalizationProvider dateAdapter={AdapterDayjs} dateLibInstance={dayjs}>
-                    <Laboral/>
-                </LocalizationProvider>
+         
+                <Laboral/>
                 <Civil/>
                 <Family/> 
                 
@@ -45,8 +39,7 @@ export default function Home() {
             </div>
 
             <Chat/>
-            {/* {chatOpen && <ChatBox closeChat={openChat}/>} */}
-            {/* <Chat/> */}
+
             <Footer/>
 
         </div>

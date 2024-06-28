@@ -29,6 +29,7 @@ export default function Chat(){
     const [open, setOpen] = useState<boolean>(false)
 
     const [messages, setmessages] = useState<(JSX.Element | null)[]>([]);
+    const [chatCreated, setChatCreated] = useState<boolean>(false)
 
     useEffect(()=>{
         // Scroll down if new message or open chat
@@ -61,12 +62,11 @@ export default function Chat(){
         const options: IHttpOptions = api_service.generateOptions(url, {}) 
 
         const [status, response] = await api_service.request("POST", options)
-
+        console.log(response)
         if (status != 201){
-    
             return null
         }
-        console.log(response.roomID)
+        setChatCreated(true)
         initializeWebSocket(response.roomID)
     }
 
@@ -114,54 +114,57 @@ export default function Chat(){
 
     }
 
+        
+    if(chatCreated){
+        return(
+            <section className={` ${open ? 'slide-up h-full': 'h-auto'} w-full z-50 fixed bottom-0 lg:right-3 lg:w-[27rem] lg:h-auto `}>
 
-
-    return(
-        <section className={` ${open ? 'slide-up h-full': 'h-auto'} w-full z-50 fixed bottom-0 lg:right-3 lg:w-[27rem] lg:h-auto `}>
-
-            {/* Head */}
-            <header className={` ${open ? "h-[10%]" : "h-10"} w-full bg-stone-900 flex items-center p-7 gap-4 lg:h-12 `}>
-                <div className="w-10 h-10 rounded-full bg-red-50">
-                    <img></img>
-                </div>
-                <h3 className="text-white text-xl">Abogado en linea</h3>
-                <span className="h-3 w-3 rounded-full bg-green-500 opacity-75"></span>
-                
-                <div className="cursor-pointer absolute right-6" onClick={() => {setOpen(!open)}}>   
-
-                    {open ? <IoIosArrowDown className="h-8 w-8 text-white "/> : <IoIosArrowUp className="h-8 w-8 text-white"/>}
-
-                </div>
-                
-                
-            </header>
-            {/* Body */}
-            
-            {open ?
-            <main className={`w-full lg:h-96 h-[85%] bg-zinc-800 p-4 overflow-scroll`} ref={mainRef}>
-                <ComponentMap components={messages}/>
-                
-            </main> : null}
-
-            {open ?
-            <footer className={`h-[5%] w-full bg-zinc-800 flex items-center lg:h-9`}>
-                <input type="text" className="w-[90%] h-full bg-zinc-800 text-white opacity-80 text-lg border-2 border-zinc-900 px-2" ref={inputMessageRef} 
-                onKeyDown={(e)=>{ if (e.key === "Enter"){ handleInput() }
-                }}/>
-
-                <div className="w-[10%] h-full bg-slate-600 flex justify-center items-center cursor-pointer" onClick={handleInput} >
+                {/* Head */}
+                <header className={` ${open ? "h-[10%]" : "h-10"} w-full bg-stone-900 flex items-center p-7 gap-4 lg:h-12 `}>
+                    <div className="w-10 h-10 rounded-full bg-red-50">
+                        <img></img>
+                    </div>
+                    <h3 className="text-white text-xl">Abogado en linea</h3>
+                    <span className="h-3 w-3 rounded-full bg-green-500 opacity-75"></span>
                     
-                    <BiSend className=" text-stone-800 h-7 w-7"/>
-                </div>
+                    <div className="cursor-pointer absolute right-6" onClick={() => {setOpen(!open)}}>   
 
-  
-            </footer>: null}
+                        {open ? <IoIosArrowDown className="h-8 w-8 text-white "/> : <IoIosArrowUp className="h-8 w-8 text-white"/>}
+
+                    </div>
+                    
+                    
+                </header>
+                {/* Body */}
+                
+                {open ?
+                <main className={`w-full lg:h-96 h-[85%] bg-zinc-800 p-4 overflow-scroll`} ref={mainRef}>
+                    <ComponentMap components={messages}/>
+                    
+                </main> : null}
+
+                {open ?
+                <footer className={`h-[5%] w-full bg-zinc-800 flex items-center lg:h-9`}>
+                    <input type="text" className="w-[90%] h-full bg-zinc-800 text-white opacity-80 text-lg border-2 border-zinc-900 px-2" ref={inputMessageRef} 
+                    onKeyDown={(e)=>{ if (e.key === "Enter"){ handleInput() }
+                    }}/>
+
+                    <div className="w-[10%] h-full bg-slate-600 flex justify-center items-center cursor-pointer" onClick={handleInput} >
+                        
+                        <BiSend className=" text-stone-800 h-7 w-7"/>
+                    </div>
+
+    
+                </footer>: null}
 
 
 
-        </section>
+            </section>
 
-    )
+        )
+    }
+
+    return null
 }
 
 

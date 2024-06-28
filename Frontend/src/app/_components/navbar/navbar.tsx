@@ -1,4 +1,4 @@
-
+"use client"
 import banner from '../style/background1.jpg'
 import logo from '../style/logoT.png'
 import AOS from 'aos'

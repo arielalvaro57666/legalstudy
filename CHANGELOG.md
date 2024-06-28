@@ -1,6 +1,7 @@
 ## [0.5] - ?
 Frontend
-- Chat creation returns uuid4 as Response and then set the socket conection
+- Chat creation returns uuid4 as Response 
+- Chat only shows if chat was succesfuly created
 Backend
 - Websocket TokenAuthMiddleware routing 
 - Websocket chatConsumer use scope for check the usertype 
@@ -12,6 +13,7 @@ Frontend
 - Admin routes (Login Page Done)
 - Authentication logic for protected routes with HOC 
 - Credentials include httprequest for sending cookie back to authentication 
+- http service return status and response 
 Backend
 - Simple Authentication Token stored in database 
 - Login logic

@@ -29,7 +29,7 @@ class TokenAuthMiddleware:
    
         headers = dict(scope['headers'])
 
-        print(headers, flush=True)
+      
         if(headers.get(b"cookie")):
 
             token_name, token_key = headers[b"cookie"].decode("utf-8").split('=')
@@ -94,7 +94,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await sync_to_async(models.Client.objects.create)(chat=self.chat_instance, **self.client_data)
 
     async def save_message(self, data):
-        await sync_to_async(models.Message.objects.create)(chat=self.chat_instance, **data)
+        await sync_to_async(models.Message.objects.create)(chat=self.chat_instance, user_type=self.scope["user"], **data)
 
     async def save_status(self, status):
         self.chat_instance.status = status
@@ -106,17 +106,17 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.room_group_name = id
         self.chat_instance = await sync_to_async(models.Chat.objects.get)(roomID=self.room_group_name)
         await self.channel_layer.group_add(self.room_group_name,self.channel_name)
-
+        print("el supra usuario es ", self.scope["user"], flush=True)
 
         await self.accept()
-        #TODO Check if it is a admin or a client
-        # Verificar si el usuario está autenticado
 
-        # }))
-        await self.set_request()
+        if (self.scope["user"] == WSUserType.AnonymousUser):
+            await self.set_request()
 
     async def disconnect(self, code):
         print("hi ",self.room_group_name)
+        if(self.scope["user"] == WSUserType.AnonymousUser):
+            await self.save_status(ChatStatus.Closed)
         #TODO Make chat save status close (if is a client)
         
     async def set_request(self, error = False):
@@ -150,8 +150,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
        
         data = json.loads(text_data)
 
-        print("------------ ",data)
-
         #if client and not Done => Send client message and Send Request NoRoom
         if( self.scope["user"] == WSUserType.AnonymousUser and self.client_request_state != WSMClientState.Done):
      
@@ -163,11 +161,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
             #Room message
             
             await self.save_message(data)
+            data["user_type"] = self.scope["user"]
             await self.channel_layer.group_send(self.room_group_name, {"type": "chat_message", "message": data})
 
 
     async def chat_message(self, event):
-        message = self.generate_message(WSMessageType.Chat, self.scope["user"], event["message"]["text"])
-        #message = {"type": "chat", "message": event["message"]}
+        message = self.generate_message(WSMessageType.Chat, event["message"]["user_type"], event["message"]["text"])
 
         await self.send(text_data=message)

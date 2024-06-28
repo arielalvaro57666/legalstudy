@@ -1,4 +1,5 @@
 
+"use client"
 import banner from '../style/background1.jpg'
 import logo from '../style/logoT.png'
 import AOS from 'aos'
@@ -14,11 +15,9 @@ import { Button } from '@mui/material'
 const Slider = dynamic(() => import('../slider/slider'),{
     ssr: false,
 });
-interface headerProp{
-    chat: () => void;
-}
+
 //style={{backgroundImage: `url(${banner.src})`}}
-export default function Header({chat}:headerProp){
+export default function Header(){
     useEffect(()=>{
         AOS.init();
         //if scroll changeColor

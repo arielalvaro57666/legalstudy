@@ -1,5 +1,4 @@
 import { FormEvent, useContext, useEffect, useState } from "react";
-
 import { ICompensationResultsProp, ICompensationRequest, ICompensationResponse, IFormCompensation, ICompensationFormProp, IFormError } from "./interfaces/labor.interface";
 import httpRequestContext from "@/app/_core/services/httpRequest";
 import DataServiceContext from "@/app/_core/services/dataService";
@@ -14,7 +13,7 @@ export function Indemnization(){
     
 
     useEffect(()=> {
-
+        console.log("asaaa",results)
         if ( results != null ){
             setCalculated(!calculated)
         }
@@ -22,6 +21,7 @@ export function Indemnization(){
     },[results])
 
     const handleResults = (results: ICompensationResponse) => {
+        
         setResults(results)
     }
  
@@ -54,7 +54,6 @@ export function CompensationForm({handleResults}: ICompensationFormProp){
 
     //TODO: Cambiar esto a algo mas centralizado y accesible en vez de llamar siempre a setUrl
     const url = data_service.setUrl("calculo")
-    console.log("##########3, u",url)
     const [formErrors, setFormErrors] = useState<IFormError>({dateError:'',salaryError:''})
 
     const requestCalculo = async (data: any) => {
@@ -69,7 +68,7 @@ export function CompensationForm({handleResults}: ICompensationFormProp){
             return
         }
 
-        handleResults(response.data)
+        handleResults(response)
 
     }
 

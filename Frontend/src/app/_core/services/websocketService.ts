@@ -1,21 +1,21 @@
+
 import { createContext } from "react"
 import { TSocketMessageHandler } from "../interfaces/core.interface"
 import { IMessage } from "@/app/_components/chat/interfaces/chat.interface"
 
 class WebSocketService{
 
-    Websocket: WebSocket | null = null
+    websocket: WebSocket | null = null
     messageHandler: TSocketMessageHandler | null = null 
-
     
     SetSocket(url:string, room_uuid:string, message_handler: TSocketMessageHandler){
         
-        this.Websocket = new WebSocket(`${url}/${room_uuid}/`)
+        this.websocket = new WebSocket(`${url}/${room_uuid}/`)
 
-        this.Websocket.onopen = this.socketOnOpen
-        this.Websocket.onmessage = this.socketOnMessage
-        this.Websocket.onerror = this.socketOnError
-        this.Websocket.onclose = this.socketOnClose
+        this.websocket.onopen = this.socketOnOpen
+        this.websocket.onmessage = this.socketOnMessage
+        this.websocket.onerror = this.socketOnError
+        this.websocket.onclose = this.socketOnClose
         
         this.messageHandler = message_handler
 
@@ -24,7 +24,7 @@ class WebSocketService{
     // Make send data method 
     socketSendData = (message: IMessage) => {
         let data = JSON.stringify(message)
-        this.Websocket?.send(data)
+        this.websocket?.send(data)
     }
     
     socketOnOpen = (response: Event) => {
@@ -38,11 +38,11 @@ class WebSocketService{
     }
 
     socketOnClose = (response: CloseEvent) => {
-  
+        
     }
 
     socketOnError = (response: Event) => {
-        
+    
     }
 }
 
