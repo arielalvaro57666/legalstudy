@@ -1,4 +1,6 @@
-## [0.5] - ?
+## [0.6] - ?
+
+## [0.5] - 2024-6-27
 Frontend
 - Chat creation returns uuid4 as Response 
 - Chat only shows if chat was succesfuly created
