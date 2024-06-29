@@ -29,7 +29,7 @@ class Client(models.Model):
     name = models.CharField(max_length=32, blank=True)
     cellphone = models.PositiveIntegerField(blank=True)
     #Relationships
-    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='client')
+    chat = models.OneToOneField(Chat, on_delete=models.CASCADE, related_name='client')
     #Metadata
     #Methods
 

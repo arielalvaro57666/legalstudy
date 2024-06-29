@@ -1,23 +1,23 @@
 // import { Dashboard } from "@/app/_components/admin/dashboard/dashboard";
 "use client"
 import withAuth from "@/app/_components/admin/Auth/withAuth"
+import ChatPanel from "@/app/_components/admin/chat/chat-panel"
+import Sidebar from "@/app/_components/admin/sidebar/sidebar"
 import WebSocketServiceContext from "@/app/_core/services/websocketService"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 
 
 
 function Dashboard(){
-    const websocket_service = useContext(WebSocketServiceContext)
 
-    useEffect(()=>{
-        websocket_service.SetSocket('ws://localhost:8088/ws/chat', "b2fe551c-048d-4b96-a6a2-b6c5b62b5693",()=>{})
-    },[])
 
     return(
-        <>
-            <h1>hola</h1>
+        <section className="bg-[#222] w-screen h-screen md:grid md:grid-cols-7 md:grid-rows-1 md:gap-3">
+            <Sidebar/>
+            
+            <ChatPanel/>
 
-        </>
+        </section>
     )
 }
 

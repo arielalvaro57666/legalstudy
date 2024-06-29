@@ -6,34 +6,23 @@ from . import models
 # class MessageSerializer(serializers.ModelSerializer)
 
 class MessageSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = models.Message
-        fields = ["text", "chatRoom"]
-
-    
-
-class ChatRetrieveSerializer(serializers.ModelSerializer):
-
-
-    class Meta:
-        model = models.Chat
-        fields = ["roomID"]
-    
-
-class ChatAdminRetrieveSerializer(ChatRetrieveSerializer):
-
-    class Meta:
-        fields = '__all__'
-
-class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Message
-        fields = ["text", "chat"]
+        fields = ["user_type", "text"]
 
 class ClientSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Client
-        fields = ["name", "cellphone", "chat"]
+        fields = ["name", "cellphone"]
+
+class ChatSerializer(serializers.ModelSerializer):
+    client = ClientSerializer(read_only = True)
+    messages = MessageSerializer(read_only = True, many=True)
+
+    class Meta:
+        model = models.Chat
+        fields = ["created", "roomID", "status", "client", "messages"]
+
+    

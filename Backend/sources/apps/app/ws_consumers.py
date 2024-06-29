@@ -1,6 +1,6 @@
 import json 
 import uuid
-
+import re
 from asgiref.sync import async_to_sync
 
 from .enums import WSMessageType, WSUserType, WSMClientState, ChatStatus
@@ -83,7 +83,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         if (self.client_request_state == WSMClientState.CellphoneRequest and self.client_data["cellphone"] == None):
             
 
-            if (data["text"] == "" or len(data["text"]) < 4):
+            if (not re.match(r'^\d+$', data["text"]) ):
                 return True
             
             self.client_data["cellphone"] = data["text"]
