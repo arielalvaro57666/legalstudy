@@ -2,7 +2,7 @@
 import React, { KeyboardEvent, useContext, useEffect, useRef, useState } from "react"
 import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/io'
 import { BiSend } from "react-icons/bi";
-import {IChat, IMessage} from "./interfaces/chat.interface";
+import {IChat, IMessage, IMessageData} from "./interfaces/chat.interface";
 import DataServiceContext from "@/app/_core/services/dataService";
 import { Socket } from "dgram";
 import { JsxElement } from "typescript";
@@ -14,6 +14,7 @@ import "./chat.css"
 import httpRequestContext from "@/app/_core/services/httpRequest";
 import { IHttpOptions } from "@/app/_core/interfaces/core.interface";
 import chatServiceContext from "./services/chat.service";
+import { WebsocketTypeEnum } from "@/app/_core/enums/core.enum";
 
 export default function Chat(){
     const data_service = useContext(DataServiceContext)
@@ -22,7 +23,8 @@ export default function Chat(){
     const chat_service = useContext(chatServiceContext)
 
     const url = data_service.setUrl("chat_create")
-    
+    const ws_url = data_service.setUrlws("chat")
+
     const mainRef = useRef<HTMLElement>(null)
     const inputMessageRef = useRef<HTMLInputElement>(null)
     
@@ -52,7 +54,10 @@ export default function Chat(){
     
     //Functions
     const initializeWebSocket = (uuid: string) => {
-        websocket_service.SetSocket(data_service.ws_backend, uuid , generateMessage)
+
+        const uuid_url = `${ws_url}/${uuid}/`
+
+        websocket_service.SetSocket(uuid_url, WebsocketTypeEnum.Chat, generateMessage)
     }    
 
 
@@ -71,17 +76,17 @@ export default function Chat(){
     }
 
 
-    const generateMessage = (message: IMessage) => {
-        
+    const generateMessage = (data: IMessageData) => {
+   
         
         let messageElem: JSX.Element | null = null
 
-        if (message.user_type === messageType.Admin){
-            messageElem = <AdmingMsg text={message.text}/>
+        if (data.user_type === messageType.Admin){
+            messageElem = <AdmingMsg text={data.text}/>
         }
 
-        if (message.user_type === messageType.AnonymousUser){
-            messageElem = <ClientMsg text={message.text}/>
+        if (data.user_type === messageType.AnonymousUser){
+            messageElem = <ClientMsg text={data.text}/>
         }
         
         setmessages( prevmessages => [...prevmessages, messageElem])
@@ -89,11 +94,11 @@ export default function Chat(){
     
     const sendMessage = (text: string) => {
 
-        let message: IMessage = {
+        let message: IMessageData = {
             text: text
         }
 
-        websocket_service.socketSendData(message)
+        websocket_service.socketSendData(WebsocketTypeEnum.Chat,message)
     }
 
 
@@ -168,7 +173,7 @@ export default function Chat(){
 }
 
 
-function AdmingMsg(message: IMessage){
+function AdmingMsg(message: IMessageData){
     return(
         <> 
             <div className="flex w-2/3 justify-start mb-6 text-white break-all">
@@ -177,7 +182,7 @@ function AdmingMsg(message: IMessage){
         </>
     )
 }
-function ClientMsg(message: IMessage){
+function ClientMsg(message: IMessageData){
     return(
         <>
             <div className="w-full flex justify-end">

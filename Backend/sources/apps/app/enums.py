@@ -7,12 +7,14 @@ class WSUserType:
     AnonymousUser = "AnonymousUser"
     Admin = "Admin"
 
-class WSMessageType:
-    Chat = 1
-    Request = 2
+class WSType:
+    Chat = 0
+    Admin = 1
     
-
 class WSMClientState:
     NameRequest = "name"
     CellphoneRequest = "cellphone"
     Done = "Done"
+
+class  WSNotificationType:
+    chatChanged = 0

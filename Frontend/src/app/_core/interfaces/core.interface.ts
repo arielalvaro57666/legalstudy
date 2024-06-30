@@ -13,3 +13,10 @@ interface IHTTPdetail{
 }
 
 export type TSocketMessageHandler = (obj: any) => void
+
+export interface IWebSocket{
+    type: number
+    websocket: WebSocket
+    handler: TSocketMessageHandler
+}
+

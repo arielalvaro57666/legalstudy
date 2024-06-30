@@ -7,20 +7,33 @@ import { data } from "autoprefixer";
 import { IChat, IClient } from "./interfaces/chat.interface";
 import { ChatStatusEnum } from "./enums/chat.enum";
 import { Loading } from "@/app/_core/components/loading/loading";
+import WebSocketServiceContext from "@/app/_core/services/websocketService";
+import { WebsocketTypeEnum } from "@/app/_core/enums/core.enum";
 
 
 export default function ChatPanel(){
 
     const data_service = useContext(DataServiceContext)
     const api_service = useContext(httpRequestContext)
+    const websocket_service = useContext(WebSocketServiceContext)
+
     const url = data_service.setUrl('chat_list')
+    
+
     const [loading, setLoading] = useState(true)
     const [chatsOn, setChatsOn] = useState<IChat[]>([])
     const [chatsOff, setChatsOff] = useState<IChat[]>([])
 
     useEffect(()=>{
         getChats()
+        connectAdmin()
     },[])
+
+    const connectAdmin = () => {
+        const ws_url = data_service.setUrlws("admin/")
+        websocket_service.SetSocket(ws_url, WebsocketTypeEnum.Admin, getChats)
+    }
+
 
 
     const getChats = async () => {
@@ -63,9 +76,14 @@ export default function ChatPanel(){
                     <h2 className="text-center text-white text-3xl">Conectados</h2>
                     <section className="w-full h-full border-2 cursor-pointer border-red-600 overflow-scroll">
                         
-                        <div className="w-full h-12 border-2 flex items-center justify-center">
-                            <p className="text-white text-center">Cliente: ariel Telefono: 3512297044</p>
-                        </div>
+  
+                        {
+                            chatsOn.map((chat, index)=> (
+                                <div className="w-full h-12 border-2 flex items-center justify-center" key={index}>
+                                    <p className="text-white text-center">Cliente: {chat.client.name} Telefono: {chat.client.cellphone}</p>
+                                </div>
+                            ))
+                        }
            
                     </section>
                 </section>
