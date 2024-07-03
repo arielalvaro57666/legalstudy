@@ -13,11 +13,12 @@ function Dashboard(){
 
 
     return(
-        <section className="bg-[#222] w-screen h-screen p-10">
+        <section className="w-full h-full p-10"> 
             <Stats/>
 
         </section>
     )
 }
 
-export default withAuth(Dashboard)
+//export default withAuth(Dashboard)
+export default Dashboard

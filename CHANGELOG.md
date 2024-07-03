@@ -1,13 +1,23 @@
 ## [0.6] - ?
 Frontend 
 - WebsocketService now hashmap websocket dependending on the websocket type
-- Panelchat for dashboard
+- Panelchat for dashboard (connected chats and viceversa)
+- Panelchat component filter between on and off chats 
+- Panelchat component refresh chats everytimes admin websocket notifies
 - panelchat init admin websocket
-- 
+- Chat design for admin dashboard
+- Chat component in dashboard returned with key prop(roomID) allowing swaping between chats when state changes  
+- Chat component conditions for admin and props for checking the user and if data chat exists
+- Chat component restore messages if admin passed chat_data prop
+- Admin sidebar options routing
+- TODO: Finish Home page with some numbers and presentation
+- TODO: Check if admin close websocket when swaps to another chat
 Backend
 - Admin WS consumer to notify chat changes to admin
-- Chat WS consumer notifies if chat open or closed
+- Chat Model method notifies adminconsumer if status changed
 - Changes on Messagetype Enum to WSType Enum
+- Chat list and chat retrieve endpoints
+- TODO: Create statistics Model for admin
 
 ## [0.5] - 2024-6-27
 Frontend
