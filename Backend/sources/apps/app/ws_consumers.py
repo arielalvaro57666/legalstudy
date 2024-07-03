@@ -2,9 +2,9 @@ import json
 import uuid
 import re
 from asgiref.sync import async_to_sync
-
+from asyncio import create_task
 from channels.layers import get_channel_layer
-from .enums import WSType, WSUserType, WSMClientState, WSNotificationType, ChatStatus
+from .enums import WSType, WSUserType, WSMClientState, WSNotificationType, ChatStatus, WSMessageType
 from .constants import WSRequestMessages
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer, WebsocketConsumer
@@ -50,18 +50,17 @@ class TokenAuthMiddleware:
 
         return await self.app(scope, receive, send)
 
-def generate_message(ws_type: str, user_type: str, text: str):
-    return json.dumps({"type": ws_type, "data":{"user_type": user_type, "text": text}}, ensure_ascii=False)
+def generate_message(ws_type: str, message_type: int, user_type: str, text: str):
+    print(ws_type, message_type, user_type, text)
+    return json.dumps({"type": ws_type, "data":{"user_type": user_type, "message_type":message_type ,"text": text}}, ensure_ascii=False)
 
 def generate_notification(ws_type:str , notification_type: int):
     return json.dumps({"type": ws_type, "data":{"notification_type":notification_type}}, ensure_ascii=False)
 
 
 
-GROUP_DISPLAY = 'displays'
-GROUP_PENDINGS = 'pendings'
-GROUP_EMITTER = 'emitters'
-GROUP_ADVERTISER = 'advertisers'
+GROUP_ADMIN = 'admin'
+
 
 class AdminConsumer(WebsocketConsumer):
 
@@ -73,7 +72,7 @@ class AdminConsumer(WebsocketConsumer):
         # self.room_name = self.scope['url_route']['kwargs']['room_name']
         # self.group_name = self.GROUP_LAST_TURNS # 'chat_%s' % self.room_name
         
-        self.group_name = GROUP_PENDINGS # 'chat_%s' % self.room_name        
+        self.group_name = GROUP_ADMIN # 'chat_%s' % self.room_name        
 
         # Join room group
         async_to_sync(self.channel_layer.group_add)(self.group_name,self.channel_name)
@@ -143,21 +142,23 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def save_message(self, data):
-        models.Message.objects.create(chat=self.chat_instance, user_type=self.scope["user"], **data)
+        models.Message.objects.create(chat=self.chat_instance, user_type=self.scope["user"], text=data["text"])
 
     @database_sync_to_async
     def save_status(self, status):
         self.chat_instance.status = status
         self.chat_instance.save()
+        
 
     @database_sync_to_async
     def remove_chat(self):
         self.chat_instance.delete()
+        
 
-    async def notifiy_changes(self):
+    async def notify_changes(self):
         channel_layer = get_channel_layer()
         await channel_layer.group_send(
-            GROUP_PENDINGS,
+            GROUP_ADMIN,
             {
                 'type': 'receive_from_group',
                 'notification_type': WSNotificationType.chatChanged
@@ -179,19 +180,19 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.set_request()
 
         
-    async def websocket_disconnect(self, message):
-        if(self.scope["user"] == WSUserType.AnonymousUser):
-            await self.save_status(ChatStatus.Closed)
-         
+    async def disconnect(self, message):
         
-        if(self.client_request_state != WSMClientState.Done):
+        if(self.scope["user"] == WSUserType.AnonymousUser):
+            message = generate_message(WSType.Chat, WSMessageType.notification, self.scope["user"], "El usuario se ha desconectado" )
+            await self.channel_layer.group_send(self.room_group_name, {"type": "chat_message", "message": message})
+
+        if(self.scope["user"] == WSUserType.AnonymousUser and self.client_request_state != WSMClientState.Done):
             await self.remove_chat()
 
-        await self.notifiy_changes()
-
-        return super().websocket_disconnect(message)
+        if(self.scope["user"] == WSUserType.AnonymousUser):
+            await self.save_status(ChatStatus.Closed)
         
-
+    
 
     async def set_request(self, error = False):
         message = ""
@@ -199,7 +200,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         if (self.client_data["name"] == None):
 
             self.client_request_state = WSMClientState.NameRequest
-            
+
             message = WSRequestMessages.NAME if (not error) else WSRequestMessages.NAME_ERROR
             
         elif (self.client_data["cellphone"] == None):
@@ -212,24 +213,25 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.save_request()
             
             await self.save_status(ChatStatus.Open)
-            await self.notifiy_changes()
+            
 
             self.client_request_state = WSMClientState.Done
 
             message = WSRequestMessages.DONE
             
 
-        await self.send(text_data=generate_message(WSType.Chat ,WSUserType.Admin, message))
+        await self.send(text_data=generate_message(WSType.Chat, WSMessageType.chat ,WSUserType.Admin, message))
 
 
     async def receive(self, text_data):
        
         data = json.loads(text_data)
-
+        data["message_type"] = WSMessageType.chat
+        data["user_type"] = self.scope["user"]
         #if client and not Done => Send client message and Send Request NoRoom
         if( self.scope["user"] == WSUserType.AnonymousUser and self.client_request_state != WSMClientState.Done):
      
-            await self.send(text_data=generate_message(WSType.Chat, self.scope["user"], data["text"]))
+            await self.send(text_data=generate_message(WSType.Chat, WSMessageType.chat, self.scope["user"], data["text"]))
             error = self.check_request(data)
             await self.set_request(error)
         
@@ -237,25 +239,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
             #Room message
             
             await self.save_message(data)
-            data["user_type"] = self.scope["user"]
-            await self.channel_layer.group_send(self.room_group_name, {"type": "chat_message", "message": data})
+            
+            message = generate_message(WSType.Chat, WSMessageType.chat, self.scope["user"], data["text"])
+            await self.channel_layer.group_send(self.room_group_name, {"type": "chat_message", "message": message})
 
 
     async def chat_message(self, event):
-        message = generate_message(WSType.Chat, event["message"]["user_type"], event["message"]["text"])
+       # message = generate_message(WSType.Chat, **event["message"])
     
-        await self.send(text_data=message)
-
-
-def notify_changes():
-
-    channel_layer = get_channel_layer()
-
-    # Send message to room group
-    async_to_sync(channel_layer.group_send)(
-        GROUP_PENDINGS,
-        {
-            'type': 'receive_from_group',
-            'notification_type': WSNotificationType.chatChanged
-        }
-    )
+        #await self.send(text_data=message)
+        await self.send(text_data=event["message"])

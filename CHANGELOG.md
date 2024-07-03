@@ -1,4 +1,13 @@
 ## [0.6] - ?
+Frontend 
+- WebsocketService now hashmap websocket dependending on the websocket type
+- Panelchat for dashboard
+- panelchat init admin websocket
+- 
+Backend
+- Admin WS consumer to notify chat changes to admin
+- Chat WS consumer notifies if chat open or closed
+- Changes on Messagetype Enum to WSType Enum
 
 ## [0.5] - 2024-6-27
 Frontend

@@ -2,6 +2,9 @@ from django.db import models
 from apps.core.models import BaseModel
 from uuid import uuid4
 from .enums import ChatStatus
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+from .enums import WSNotificationType
 # Create your models here.
 #chat 1----* messages 
 #cliente 1 --- 1 chat
@@ -13,6 +16,27 @@ class Chat(BaseModel):
     #Relationships
     #Metadata
     #Methods
+    
+    # Notify admin that a chat has changed
+    def notify_changes(self):
+
+        channel_layer = get_channel_layer()
+
+        # Send message to room group
+        async_to_sync(channel_layer.group_send)(
+            'admin',
+            {
+                'type': 'receive_from_group',
+                'notification_type': WSNotificationType.chatChanged
+            }
+        )
+    
+    def save(self, *args, **kwargs): 
+       
+        
+        self.notify_changes()
+
+        return super().save(*args, **kwargs)
 
 class Message(BaseModel):
     #Fields

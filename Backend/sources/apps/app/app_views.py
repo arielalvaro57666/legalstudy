@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .controllers.execute import processCalculo
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
-from .ws_consumers import notify_changes
+
 #Models
 from . import models
 from . import app_serializers
@@ -42,13 +42,12 @@ class MessageCreateAPIView(CreateAPIView):
     serializer_class = app_serializers.MessageSerializer
 
 
-# class ChatRetrieveAPIView(RetrieveAPIView):
-#     # authentication_classes = [SessionAuthentication, TokenAuthentication]
-#     # permission_classes = [IsAuthenticated]
-    
-#     lookup_field = 'roomID'
-#     queryset = models.Chat.objects.all()
-#     serializer_class = app_serializers.ChatRetrieveSerializer
+class ChatRetrieveAPIView(RetrieveAPIView):
+    # authentication_classes = [SessionAuthentication, TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
+    lookup_field = 'roomID'
+    queryset = models.Chat.objects.all()
+    serializer_class = app_serializers.ChatSerializer
 
 
 class ChatListAPIView(ListAPIView):

@@ -42,7 +42,13 @@ export default function withAuth(Component: any){
 
 
         if (! authenticated){
-            return <Loading/>
+            return(
+                <div className="w-screen h-screen">
+                    <Loading/>
+                </div>  
+            ) 
+        
+            
         }
 
 

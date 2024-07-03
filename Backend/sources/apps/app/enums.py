@@ -7,6 +7,10 @@ class WSUserType:
     AnonymousUser = "AnonymousUser"
     Admin = "Admin"
 
+class WSMessageType:
+    chat = 0
+    notification = 1
+
 class WSType:
     Chat = 0
     Admin = 1

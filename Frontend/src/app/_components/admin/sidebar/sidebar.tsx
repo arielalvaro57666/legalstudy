@@ -18,14 +18,14 @@ export default function Sidebar(){
     }
 
     if(open == false){
-        return <TbLayoutSidebarLeftExpandFilled className="fixed w-10 h-10 text-white opacity-60 cursor-pointer" onClick={handleSidebar}/>
+        return <TbLayoutSidebarLeftExpandFilled className="fixed w-10 h-10 text-white opacity-60 cursor-pointer top-2 left-2" onClick={handleSidebar}/>
     }
 
     return (
-        <aside className="fixed side-appear h-full w-3/5 p-4 gap-4 md:w-full md:h-full bg-sky-950 flex flex-col md:gap-10 items-center md:p-10">
+        <aside className="fixed side-appear h-full w-3/5 p-4 gap-4 lg:w-[16%] bg-sky-950 flex flex-col lg:gap-10 z-50 items-center lg:p-10">
             <TbLayoutSidebarLeftCollapseFilled className="w-10 h-10 text-white opacity-60 cursor-pointer" onClick={handleSidebar}/>
-            <GiInjustice className="w-12 h-12 md:w-40 md:h-40 "/>
-            <span className="w-full h-0.5 md:h-2 bg-black"></span>
+            <GiInjustice className="w-12 h-12 lg:w-24 md:h-24 text-white"/>
+            <span className="w-full h-0.5 lg:h-0.5 bg-white"></span>
 
             <section className="w-full">
                 <Options/>

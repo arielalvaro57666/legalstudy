@@ -13,7 +13,6 @@ class WebSocketService{
         
         let websocket = new WebSocket(url)
 
-
         websocket.onopen = this.socketOnOpen
         websocket.onmessage = this.socketOnMessage
         websocket.onerror = this.socketOnError
@@ -35,7 +34,10 @@ class WebSocketService{
         // this.messageHandler = message_handler
 
     }
-
+    
+    closeSocket = (type: number) => {
+        this.websockets[type].websocket.close()
+    }
     // Make send data method 
     socketSendData = (type: number, message: IMessageData) => {
         let data = JSON.stringify(message)
@@ -53,9 +55,9 @@ class WebSocketService{
     socketOnMessage = (response: MessageEvent) => {
      
         let message: IMessage = JSON.parse(response.data) 
-        console.log(message)
         
-        this.websockets[message.type].handler(message.data)
+        console.log(message)
+        this.websockets[message.type].handler(message)
 
         // this.messageHandler!(data.message)
     }
