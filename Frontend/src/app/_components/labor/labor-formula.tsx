@@ -60,15 +60,17 @@ export function CompensationForm({handleResults}: ICompensationFormProp){
         console.log("########## data -> ",data)
         const requestData = labor_service.processData(data)
         const options: IHttpOptions =  http_service.generateOptions(url, requestData) 
-        const [status,response] = await http_service.request('POST', options)
+        const response: IHTTPresponse<ICompensationResponse> = await http_service.request<ICompensationResponse>('POST', options)
         console.log(response)
         // if everything went correct
-        if(status != 200){
+        if(response.status != 200){
             //toast warning logic
             return
         }
-
-        handleResults(response)
+        if(response.data){
+            handleResults(response.data)
+        }
+        
 
     }
 
