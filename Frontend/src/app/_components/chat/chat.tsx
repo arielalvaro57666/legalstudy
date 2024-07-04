@@ -12,7 +12,7 @@ import WebSocketServiceContext from "@/app/_core/services/websocketService";
 import { v4 as uuidv4 } from "uuid"
 import "./chat.css"
 import httpRequestContext from "@/app/_core/services/httpRequest";
-import { IHttpOptions } from "@/app/_core/interfaces/core.interface";
+import { IHTTPdetail, IHTTPresponse, IHttpOptions } from "@/app/_core/interfaces/core.interface";
 import chatServiceContext from "./services/chat.service";
 import { WebsocketTypeEnum } from "@/app/_core/enums/core.enum";
 import { FaUserCircle } from "react-icons/fa";
@@ -79,13 +79,16 @@ export default function Chat({actual_user, chat_data}: IChatProp  ){
 
         const options: IHttpOptions = api_service.generateOptions(create_url, {}) 
 
-        const [status, response] = await api_service.request("POST", options)
+        const response: IHTTPresponse<IChat> = await api_service.request<IChat>("POST", options)
         console.log(response)
-        if (status != 201){
+        if (response.status != 201){
             return null
         }
         
-        initializeWebSocket(response.roomID)
+        if(response.data){
+            initializeWebSocket(response.data.roomID)
+        }
+        
     }
 
     const handleMessage = (message: IMessage) => {
@@ -108,14 +111,16 @@ export default function Chat({actual_user, chat_data}: IChatProp  ){
 
         const options: IHttpOptions = api_service.generateOptions(get_url, {})
 
-        const [status, response] = await api_service.request('GET',options) 
+        const response: IHTTPresponse<IChat> = await api_service.request<IChat>('GET',options, true) 
 
         
-        if(status != 200){
+        if(response.status != 200){
             return
         }
-
-        restoreMessages(response.messages)
+        if(response.data){
+            restoreMessages(response.data.messages)
+        }
+        
 
     }
 

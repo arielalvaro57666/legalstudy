@@ -163,3 +163,7 @@ LOGS = {
 
 SESSION_COOKIE_SECURE = False  # Puede ser False en desarrollo
 CSRF_COOKIE_SECURE = False  
+
+#TIME ZONE
+TIME_ZONE = 'America/Argentina/Buenos_Aires'
+USE_TZ = True

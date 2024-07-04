@@ -2,17 +2,17 @@ import { useContext, useEffect, useState } from "react";
 
 import DataServiceContext from "@/app/_core/services/dataService";
 import httpRequestContext from "@/app/_core/services/httpRequest";
-import { IHttpOptions } from "@/app/_core/interfaces/core.interface";
-import { data } from "autoprefixer";
-import { IChat, IChatPanelProp, IClient } from "./interfaces/chat.interface";
+import { IHTTPresponse, IHttpOptions } from "@/app/_core/interfaces/core.interface";
+
+import { IChatPanelProp, IClient } from "./interfaces/chat.interface";
 import { ChatStatusEnum } from "./enums/chat.enum";
 import { Loading } from "@/app/_core/components/loading/loading";
 import WebSocketServiceContext from "@/app/_core/services/websocketService";
 import { WebsocketTypeEnum } from "@/app/_core/enums/core.enum";
 
-import Chat from "@/app/_components/chat/chat"
-import { UserTypeEnum } from "../../chat/enums/chat.enum";
-import { IChatData } from "../../chat/interfaces/chat.interface";
+
+import { IChat, IChatData } from "../../chat/interfaces/chat.interface";
+
 
 export default function ChatPanel({chatHandler}: IChatPanelProp){
 
@@ -48,13 +48,15 @@ export default function ChatPanel({chatHandler}: IChatPanelProp){
   
         const options: IHttpOptions = api_service.generateOptions(url, {})
 
-        const [status,response] = await api_service.request('GET',options) 
+        const response: IHTTPresponse<IChat[]> = await api_service.request<IChat[]>('GET',options, true) 
 
-        if(status != 200){
+        if(response.status != 200){
             return
         }
-
-        filterChats(response)
+        if(response.data){
+            filterChats(response.data)
+        }
+        
 
     }
     

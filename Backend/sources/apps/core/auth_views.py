@@ -59,7 +59,6 @@ class AuthViewSet(GenericViewSet):
                 return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
         
         except Exception as e:
-            print("###",e)
             return Response({"detail": "Bad request"}, status=status.HTTP_400_BAD_REQUEST)
     
     

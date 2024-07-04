@@ -1,10 +1,10 @@
 "use client"
 import withAuth from "@/app/_components/admin/Auth/withAuth";
 import ChatPanel from "@/app/_components/admin/chat/chat-panel";
-import { IChat } from "@/app/_components/admin/chat/interfaces/chat.interface";
+
 import Chat from "@/app/_components/chat/chat";
 import { UserTypeEnum } from "@/app/_components/chat/enums/chat.enum";
-import { IChatData } from "@/app/_components/chat/interfaces/chat.interface";
+import { IChat, IChatData } from "@/app/_components/chat/interfaces/chat.interface";
 import { useState } from "react";
 import { IoCloseCircleSharp } from "react-icons/io5";
 function ChatAdmin(){

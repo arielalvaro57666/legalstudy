@@ -16,8 +16,7 @@ import Chat from '@/app/_components/chat/chat'
 
 import { ComponentMap } from '@/app/_core/component-map/component-map'
 import { UserTypeEnum } from '../_components/chat/enums/chat.enum'
-
-
+import Init from '../_components/init/init'
 
 
 
@@ -42,7 +41,7 @@ export default function Home() {
             <Chat actual_user={UserTypeEnum.AnonymousUser}/>
 
             <Footer/>
-
+            <Init/>
         </div>
     )
 }

@@ -33,5 +33,10 @@ export interface IMessageData{
 }
 
 export interface IChat{
+    created: string
     roomID: string
+    status: string
+    client: IClientData
+    messages: IMessageData[]
+
 }

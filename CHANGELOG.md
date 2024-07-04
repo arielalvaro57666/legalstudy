@@ -10,14 +10,17 @@ Frontend
 - Chat component conditions for admin and props for checking the user and if data chat exists
 - Chat component restore messages if admin passed chat_data prop
 - Admin sidebar options routing
-- TODO: Finish Home page with some numbers and presentation
-- TODO: Check if admin close websocket when swaps to another chat
+- Httpservice new return interface IHTTPresponse
+- Chatcount get for admin home
+- init component to update visit counter
 Backend
 - Admin WS consumer to notify chat changes to admin
 - Chat Model method notifies adminconsumer if status changed
 - Changes on Messagetype Enum to WSType Enum
 - Chat list and chat retrieve endpoints
-- TODO: Create statistics Model for admin
+- Register model 
+- Register model post vist and get day's and total visits 
+- ChatCount Retrieve to add to stats home admin page
 
 ## [0.5] - 2024-6-27
 Frontend

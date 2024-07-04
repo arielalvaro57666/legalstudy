@@ -3,12 +3,14 @@ export interface IHttpOptions{
     params?: any
 }
 
+
 export interface IHTTPresponse<T>{
-    status: number | null,
-    data: T | IHTTPdetail | null
+    status: number,
+    data: T | undefined
 }
 
-interface IHTTPdetail{
+
+export interface IHTTPdetail{
     detail: string
 }
 

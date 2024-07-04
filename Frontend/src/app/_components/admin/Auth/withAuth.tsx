@@ -6,6 +6,7 @@ import httpRequestContext from "@/app/_core/services/httpRequest";
 import { red } from "@mui/material/colors";
 import DataServiceContext from "@/app/_core/services/dataService";
 import { Loading } from "@/app/_core/components/loading/loading";
+import { IHTTPdetail, IHTTPresponse } from "@/app/_core/interfaces/core.interface";
 
  //HOC AUTH
 export default function withAuth(Component: any){
@@ -30,10 +31,11 @@ export default function withAuth(Component: any){
 
         const authenticate = async () => {
             const options = api_service.generateOptions(url,{})
-            const [status,response] = await api_service.request("GET", options)
+            const response: IHTTPresponse<IHTTPdetail> = await api_service.request<IHTTPdetail>("GET", options, true)
     
-            if (status != 200){
+            if (response.status != 200){
                 router.push("/admin/login")
+                return
             }
 
             setAuthenticated(true)

@@ -186,11 +186,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
             message = generate_message(WSType.Chat, WSMessageType.notification, self.scope["user"], "El usuario se ha desconectado" )
             await self.channel_layer.group_send(self.room_group_name, {"type": "chat_message", "message": message})
 
+        if(self.scope["user"] == WSUserType.AnonymousUser):
+            await self.save_status(ChatStatus.Closed)
+
         if(self.scope["user"] == WSUserType.AnonymousUser and self.client_request_state != WSMClientState.Done):
             await self.remove_chat()
 
-        if(self.scope["user"] == WSUserType.AnonymousUser):
-            await self.save_status(ChatStatus.Closed)
+
         
     
 
