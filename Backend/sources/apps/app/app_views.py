@@ -6,7 +6,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .controllers.execute import processCalculo
-from rest_framework.authentication import TokenAuthentication, SessionAuthentication
+from rest_framework.authentication import SessionAuthentication
+from apps.core.auth_views import TokenAuthCookie
 from django.utils import timezone
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404
@@ -33,8 +34,8 @@ class Calculo(RetrieveAPIView):
 
 ## Register views
 class RegisterRetrieveTotalAPIView(RetrieveAPIView):
-
-
+    authentication_classes = [SessionAuthentication, TokenAuthCookie]
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         try:
             total_visits = models.Register.objects.all().aggregate(total=Sum("visited"))["total"]
@@ -45,6 +46,9 @@ class RegisterRetrieveTotalAPIView(RetrieveAPIView):
             return Response({"detail":"An error has occurred"}, status=status.HTTP_400_BAD_REQUEST)
 
 class RegisterRetrieveAPIView(RetrieveAPIView):
+
+    authentication_classes = [SessionAuthentication, TokenAuthCookie]
+    permission_classes = [IsAuthenticated]
     queryset = models.Register.objects.all()
     serializer_class = app_serializers.RegisterRetrieveSerializer
 
@@ -58,6 +62,7 @@ class RegisterRetrieveAPIView(RetrieveAPIView):
 
 
 class RegisterCreateAPIView(CreateAPIView):
+    permission_classes = [AllowAny]
     serializer_class = app_serializers.RegisterCreateSerializer
 
     def create(self, request, *args, **kwargs):
@@ -93,18 +98,26 @@ class ChatCreateAPIView(CreateAPIView):
 
 
 class ChatRetrieveAPIView(RetrieveAPIView):
-    # authentication_classes = [SessionAuthentication, TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, TokenAuthCookie]
+    permission_classes = [IsAuthenticated]
+
     lookup_field = 'roomID'
     queryset = models.Chat.objects.all()
     serializer_class = app_serializers.ChatSerializer
 
 class ChatDeleteAPIView(DestroyAPIView):
+    authentication_classes = [SessionAuthentication, TokenAuthCookie]
+    permission_classes = [IsAuthenticated]
+
     lookup_field = "roomID"
     queryset = models.Chat.objects.all()
     
 class ChatDeleteAllAPIView(DestroyAPIView):
+    authentication_classes = [SessionAuthentication, TokenAuthCookie]
+    permission_classes = [IsAuthenticated]
+
     queryset = models.Chat.objects.all()
+
     def delete(self, request, *args, **kwargs):
         try:
             chats = self.get_queryset().delete()
@@ -117,14 +130,15 @@ class ChatDeleteAllAPIView(DestroyAPIView):
 
 
 class ChatListAPIView(ListAPIView):
-    # authentication_classes = [SessionAuthentication, TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, TokenAuthCookie]
+    permission_classes = [IsAuthenticated]
 
     queryset = models.Chat.objects.all()
     serializer_class = app_serializers.ChatSerializer
 
 class ChatCounterRetrieveAPIView(RetrieveAPIView):
-
+    authentication_classes = [SessionAuthentication, TokenAuthCookie]
+    permission_classes = [IsAuthenticated]
     def get(self, request):
 
         try:
