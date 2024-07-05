@@ -32,14 +32,14 @@ class ChatSerializer(serializers.ModelSerializer):
 
 
 class RegisterRetrieveSerializer(serializers.ModelSerializer):
-    total_visits = serializers.SerializerMethodField()
+
     class Meta:
         model = models.Register
-        fields = ["date", "visited", "total_visits"]
+        fields = ["date", "visited"]
 
-    def get_total_visits(self, obj):
 
-        return models.Register.objects.all().aggregate(total=Sum("visited"))["total"]
+
+        
     
 class RegisterCreateSerializer(serializers.ModelSerializer):
  

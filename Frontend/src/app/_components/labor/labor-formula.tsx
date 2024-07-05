@@ -4,6 +4,7 @@ import httpRequestContext from "@/app/_core/services/httpRequest";
 import DataServiceContext from "@/app/_core/services/dataService";
 import { IHTTPresponse, IHttpOptions } from "@/app/_core/interfaces/core.interface";
 import laborServiceContext from "./services/labor.service";
+import { HTTPMethodEnum } from "@/app/_core/enums/core.enum";
 
 
 export function Indemnization(){
@@ -60,7 +61,7 @@ export function CompensationForm({handleResults}: ICompensationFormProp){
         console.log("########## data -> ",data)
         const requestData = labor_service.processData(data)
         const options: IHttpOptions =  http_service.generateOptions(url, requestData) 
-        const response: IHTTPresponse<ICompensationResponse> = await http_service.request<ICompensationResponse>('POST', options)
+        const response: IHTTPresponse<ICompensationResponse> = await http_service.request<ICompensationResponse>(HTTPMethodEnum.POST, options)
         console.log(response)
         // if everything went correct
         if(response.status != 200){

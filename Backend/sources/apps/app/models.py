@@ -20,7 +20,7 @@ class Chat(BaseModel):
     #Methods
     
     # Notify admin that a chat has changed
-    def notify_changes(self):
+    def notify_changes(self, status):
 
         channel_layer = get_channel_layer()
 
@@ -29,14 +29,16 @@ class Chat(BaseModel):
             'admin',
             {
                 'type': 'receive_from_group',
-                'notification_type': WSNotificationType.chatChanged
+                'notification_type': status
             }
         )
     
     def save(self, *args, **kwargs): 
        
-        
-        self.notify_changes()
+        if (self.status != ChatStatus.Request):
+            self.notify_changes(self.status) 
+
+           
 
         return super().save(*args, **kwargs)
 

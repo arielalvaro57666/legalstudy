@@ -1,4 +1,4 @@
-## [0.6] - ?
+## [0.6] - 0.6 2025-7-5
 Frontend 
 - WebsocketService now hashmap websocket dependending on the websocket type
 - Panelchat for dashboard (connected chats and viceversa)
@@ -11,8 +11,9 @@ Frontend
 - Chat component restore messages if admin passed chat_data prop
 - Admin sidebar options routing
 - Httpservice new return interface IHTTPresponse
-- Chatcount get for admin home
+- get Visits, Chatcount for admin home
 - init component to update visit counter
+- Delete saved chats button
 Backend
 - Admin WS consumer to notify chat changes to admin
 - Chat Model method notifies adminconsumer if status changed
@@ -21,7 +22,7 @@ Backend
 - Register model 
 - Register model post vist and get day's and total visits 
 - ChatCount Retrieve to add to stats home admin page
-
+- Delete chats endpoint
 ## [0.5] - 2024-6-27
 Frontend
 - Chat creation returns uuid4 as Response 

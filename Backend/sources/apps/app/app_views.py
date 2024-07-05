@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from rest_framework.generics import RetrieveAPIView, CreateAPIView, ListAPIView, UpdateAPIView, GenericAPIView
+from rest_framework.generics import RetrieveAPIView, CreateAPIView, ListAPIView, DestroyAPIView
 from rest_framework.decorators import action
 from rest_framework import status
 from rest_framework.response import Response
@@ -32,6 +32,17 @@ class Calculo(RetrieveAPIView):
             pass
 
 ## Register views
+class RegisterRetrieveTotalAPIView(RetrieveAPIView):
+
+
+    def get(self, request):
+        try:
+            total_visits = models.Register.objects.all().aggregate(total=Sum("visited"))["total"]
+
+            return Response({"total":total_visits}, status=status.HTTP_200_OK)
+        
+        except Exception as e:
+            return Response({"detail":"An error has occurred"}, status=status.HTTP_400_BAD_REQUEST)
 
 class RegisterRetrieveAPIView(RetrieveAPIView):
     queryset = models.Register.objects.all()
@@ -42,48 +53,43 @@ class RegisterRetrieveAPIView(RetrieveAPIView):
         queryset = self.get_queryset()
         obj = get_object_or_404(queryset, date=datetime.now().strftime("%Y-%m-%d"))
         return obj
+    
+
 
 
 class RegisterCreateAPIView(CreateAPIView):
     serializer_class = app_serializers.RegisterCreateSerializer
 
     def create(self, request, *args, **kwargs):
+        try:
+            date = datetime.now().strftime("%Y-%m-%d")
+            # print(date, flush=True)
+            register = models.Register.objects.filter(date = date).first()
+            
+            if (register):
+                print("existe",flush=True)
+                visited = register.visited + 1
+                data = {"visited":visited}
+                serializer = self.get_serializer(register, data = data, partial=True)
 
-        date = datetime.now().strftime("%Y-%m-%d")
-        # print(date, flush=True)
-        register = models.Register.objects.filter(date = date).first()
-        
-        if (register):
-            print("existe",flush=True)
-            visited = register.visited + 1
-            data = {"visited":visited}
-            serializer = self.get_serializer(register, data = data, partial=True)
+                if(serializer.is_valid(raise_exception=True)):
 
-            if(serializer.is_valid(raise_exception=True)):
+                    serializer.save()
+                    return Response({}, status=status.HTTP_201_CREATED)
 
-                serializer.save()
-                return Response({}, status=status.HTTP_201_CREATED)
+            data = {"date": date}
+            serializer = self.get_serializer(data = data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
 
-        data = {"date": date}
-        serializer = self.get_serializer(data = data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-        return Response({}, status=status.HTTP_201_CREATED)
-
-
+            return Response({}, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({"detail":"An error has occurred"}, status=status.HTTP_400_BAD_REQUEST)
 ## Chat Views
 
 class ChatCreateAPIView(CreateAPIView):
     permission_classes = [AllowAny]
     serializer_class = app_serializers.ChatSerializer
-
-        
-
-    
-class MessageCreateAPIView(CreateAPIView):
-    permission_classes = [AllowAny]
-    serializer_class = app_serializers.MessageSerializer
 
 
 class ChatRetrieveAPIView(RetrieveAPIView):
@@ -93,7 +99,21 @@ class ChatRetrieveAPIView(RetrieveAPIView):
     queryset = models.Chat.objects.all()
     serializer_class = app_serializers.ChatSerializer
 
+class ChatDeleteAPIView(DestroyAPIView):
+    lookup_field = "roomID"
+    queryset = models.Chat.objects.all()
     
+class ChatDeleteAllAPIView(DestroyAPIView):
+    queryset = models.Chat.objects.all()
+    def delete(self, request, *args, **kwargs):
+        try:
+            chats = self.get_queryset().delete()
+
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+    
+        except Exception as e:
+            return Response({"detail":"An error has occurred"}, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class ChatListAPIView(ListAPIView):
@@ -116,7 +136,7 @@ class ChatCounterRetrieveAPIView(RetrieveAPIView):
             return Response(data, status=status.HTTP_200_OK)
         
         except Exception as e:
-            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail":"An error has occurred"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

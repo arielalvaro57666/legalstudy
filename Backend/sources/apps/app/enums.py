@@ -21,4 +21,5 @@ class WSMClientState:
     Done = "Done"
 
 class  WSNotificationType:
-    chatChanged = 0
+    chatOpen = 0
+    chatClosed = 1

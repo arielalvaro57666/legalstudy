@@ -1,22 +1,22 @@
 'use client'
-import React, { KeyboardEvent, useContext, useEffect, useRef, useState } from "react"
+import React, {useContext, useEffect, useRef, useState } from "react"
 import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/io'
 import { BiSend } from "react-icons/bi";
 import {IChat, IChatProp, IMessage, IMessageData, IMessageProp} from "./interfaces/chat.interface";
 import DataServiceContext from "@/app/_core/services/dataService";
-import { Socket } from "dgram";
-import { JsxElement } from "typescript";
+
 import { MessageTypeEnum, MessageOriginEnum, UserTypeEnum } from "./enums/chat.enum";
 import { ComponentMap } from "@/app/_core/component-map/component-map";
 import WebSocketServiceContext from "@/app/_core/services/websocketService";
-import { v4 as uuidv4 } from "uuid"
+
 import "./chat.css"
 import httpRequestContext from "@/app/_core/services/httpRequest";
-import { IHTTPdetail, IHTTPresponse, IHttpOptions } from "@/app/_core/interfaces/core.interface";
-import chatServiceContext from "./services/chat.service";
-import { WebsocketTypeEnum } from "@/app/_core/enums/core.enum";
+import { IHTTPresponse, IHttpOptions } from "@/app/_core/interfaces/core.interface";
+
+import { HTTPMethodEnum, WebsocketTypeEnum } from "@/app/_core/enums/core.enum";
 import { FaUserCircle } from "react-icons/fa";
 import { ChatStatusEnum } from "../admin/chat/enums/chat.enum";
+
 export default function Chat({actual_user, chat_data}: IChatProp  ){
     const data_service = useContext(DataServiceContext)
     const websocket_service = useContext(WebSocketServiceContext)
@@ -79,7 +79,7 @@ export default function Chat({actual_user, chat_data}: IChatProp  ){
 
         const options: IHttpOptions = api_service.generateOptions(create_url, {}) 
 
-        const response: IHTTPresponse<IChat> = await api_service.request<IChat>("POST", options)
+        const response: IHTTPresponse<IChat> = await api_service.request<IChat>(HTTPMethodEnum.POST, options)
         console.log(response)
         if (response.status != 201){
             return null
@@ -111,7 +111,7 @@ export default function Chat({actual_user, chat_data}: IChatProp  ){
 
         const options: IHttpOptions = api_service.generateOptions(get_url, {})
 
-        const response: IHTTPresponse<IChat> = await api_service.request<IChat>('GET',options, true) 
+        const response: IHTTPresponse<IChat> = await api_service.request<IChat>(HTTPMethodEnum.GET,options, true) 
 
         
         if(response.status != 200){
@@ -193,19 +193,19 @@ export default function Chat({actual_user, chat_data}: IChatProp  ){
     }
 
     if(actual_user === UserTypeEnum.Admin && chatOpen){
+        
         return(
             <section className={` ${open && innerWidth < 1024 ? 'slide-up h-full': 'h-auto'} w-full z-40 fixed lg:static bottom-0 lg:right-3 lg:h-full lg:w-full lg:min-h`}>
 
                 {/* Head */}
                 <header className={` ${open && innerWidth < 1024 ? "h-[10%]" : "h-10"} w-full bg-slate-500 flex items-center p-7 gap-4 lg:h-[10%] `}>
-
                     <section className="flex gap-4 items-center">
                         <div className="w-10 h-10 rounded-full bg-red-50">
                             <FaUserCircle className=" w-full h-full"/>
                         </div>
                         <div>
-                            <h3 className="text-white text-xl">Cliente: Ariel Alvaro</h3>
-                            <h3 className="text-white text-xl">Telefono: 3512297044</h3>
+                            <h3 className="text-white text-xl">Cliente: {chat_data?.client_data.name}</h3>
+                            <h3 className="text-white text-xl">Telefono:  {chat_data?.client_data.cellphone}</h3>
                         </div>
                     </section>
                     <span className={`h-3 w-3 rounded-full ${!hasDisconnect ? "bg-green-500" : "bg-red-600" }  opacity-75`}></span>
