@@ -72,7 +72,7 @@ export default function Navbar(){//{chat}:headerProp
                 <nav className={`w-full 2xl:h-28 xl:h-24 h-14 ${colorNav} flex flex-row justify-between items-center fixed left-0 top-0 z-50`}>
                     <div className='2xl:hidden xl:hidden'></div>
                     <div className='logo 2xl:w-48 2xl:h-48 xl:w-40 xl:h-40 w-20 h-20 bg-contain bg-no-repeat bg-center 2xl:left-2 2xl:top-0.5 2xl:p-4 xl:left-2 xl:top-0.5  xl:p-4 p-2 rounded-full relative 2xl:rounded-none xl:rounded-none'>
-                        <img className='w-full h-full ' width={20} height={30} src='/static/logoT.png' alt='logo'></img>
+                        <img className='w-full h-full ' width={20} height={30} src='/static/iconos/logoT.png' alt='logo'></img>
 
                     </div>
                     <div className="relative inline-block text-left xl:hidden 2xl:hidden right-10" >

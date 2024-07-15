@@ -6,7 +6,6 @@ from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from .enums import WSNotificationType
 from django.conf import settings
-import pytz 
 # Create your models here.
 #chat 1----* messages 
 #cliente 1 --- 1 chat

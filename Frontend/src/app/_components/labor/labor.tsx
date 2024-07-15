@@ -17,8 +17,11 @@ export default function Laboral(){
 
     return(
         
-        <section id='laboral' className='w-full bg-[#222] mb-20'>
-            <h1 className='sap mt-1 mb-10 lg:text-7xl text-4xl text-center cursor-default uppercase'>Laboral</h1>
+        <section id='laboral' className='w-full bg-[#222] mt-20 flex flex-col justify-center items-center gap-10'>
+            <div className='titleBox w-96 h-20 bg-zinc-700 text-black shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset]'>
+                <h1 className='titleBox mt-1 mb-10 lg:text-7xl text-4xl text-center cursor-default uppercase font-semibold'>Laboral</h1>
+            </div>
+            
             <h4 className='text-orange-300 text-center font-thin text-2xl mb-6'>(Situaciones Frecuentes)</h4>
 
 

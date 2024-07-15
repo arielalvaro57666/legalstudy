@@ -8,14 +8,14 @@ fi
 
 echo "____Creating Virtual Enviroment____"
 
-python -m venv ../env
+python3 -m venv ../env
 
 echo "_______Activating VirtualEnv_______"
 
-source ../env/bin/activate
+source ../env/bin/activate.fish
 
 echo "___________Upgrading PIP___________"
 
-python -m pip install --upgrade pip
+python3 -m pip install --upgrade pip
 
 echo "_______________DONE________________"

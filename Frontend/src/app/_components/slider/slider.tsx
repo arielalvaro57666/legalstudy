@@ -23,7 +23,7 @@ export function Slider(){
 
                 label="Bogliasco - Italy"
                 background={{
-                backgroundImageSrc: '/static/header3.jpg'
+                backgroundImageSrc: '/static/header/header3.jpg'
                 }}
             />
 
@@ -31,7 +31,7 @@ export function Slider(){
                 
                 label="County Clare - Ireland"
                 background={{
-                backgroundImageSrc: '/static/header2.jpg'
+                backgroundImageSrc: '/static/header/header2.jpg'
                 }}
             />
 
@@ -39,7 +39,7 @@ export function Slider(){
 
                 label="Crater Rock, OR - United States"
                 background={{
-                backgroundImageSrc: '/static/header1.jpg'
+                backgroundImageSrc: '/static/header/header1.jpg'
                 }}
             />
 

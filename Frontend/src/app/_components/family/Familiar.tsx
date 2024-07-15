@@ -18,7 +18,7 @@ export default function Family(){
 
     return(
         
-        <section id='laboral' className='w-full bg-[#222] mb-20'>
+        <section id='laboral' className='w-full bg-[#222] mt-20'>
             <h1 className='sap mt-1 mb-10 lg:text-7xl text-4xl text-center cursor-default uppercase'>Familia</h1>
             <h4 className='text-orange-300 text-center font-thin text-2xl mb-6'>(Situaciones Frecuentes)</h4>
 
@@ -68,17 +68,17 @@ function InitialOptions(){
             <div className="w-2/3 2xl:w-3/4 xl:w-full flex flex-wrap justify-center gap-2 " data-aos="fade-up" >
 
                 <div className='option shadow-slate-600 lg:h-72 lg:w-80 h-60 w-72 flex flex-col items-center justify-center relative border-2 border-solid border-neutral-700 cursor-pointer hover:border-orange-300' onClick={()=>{handleSelection(FamilyEnum.DivorcioExpress)}}>
-                    <div className='w-full h-full bg-lab0 absolute bg-cover bg-center opacity-50  bg-no-repeat z-0'></div>
+                    <div className='w-full h-full bg-fam0 absolute bg-cover bg-center opacity-50  bg-no-repeat z-0'></div>
                     <h2 className='uppercase text-white drop-shadow-xl font-normal z-10 text-xl'>divorcio express</h2>
                 </div>
 
                 <div className='option shadow-slate-600 lg:h-72 lg:w-80 h-60 w-72 flex flex-col items-center justify-center relative border-2 border-solid border-neutral-700 cursor-pointer hover:border-orange-300' onClick={()=>{handleSelection(FamilyEnum.CuotaAlimentaria)}}>
-                    <div className='w-full h-full bg-lab5 absolute bg-cover bg-center opacity-50  bg-no-repeat z-0'></div>
+                    <div className='w-full h-full bg-fam1 absolute bg-cover bg-center opacity-50  bg-no-repeat z-0'></div>
                     <h2 className='uppercase text-white drop-shadow-xl font-normal z-10 text-xl p-2 text-center'>cuota alimentaria</h2>
                 </div>
 
                 <div className='option shadow-slate-600 lg:h-72 lg:w-80 h-60 w-72 flex flex-col items-center justify-center relative border-2 border-solid border-neutral-700 cursor-pointer hover:border-orange-300' onClick={()=>{handleSelection(FamilyEnum.Filiacion)}}>
-                    <div className='w-full h-full bg-lab4 absolute bg-cover bg-center opacity-50  bg-no-repeat z-0'></div>
+                    <div className='w-full h-full bg-fam2 absolute bg-cover bg-center opacity-50  bg-no-repeat z-0'></div>
                     <h2 className='uppercase text-white drop-shadow-xl font-normal z-10 text-xl p-2 text-center'>filiacion</h2>
                 </div>
                 

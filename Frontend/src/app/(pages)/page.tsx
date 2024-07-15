@@ -17,6 +17,7 @@ import Chat from '@/app/_components/chat/chat'
 import { ComponentMap } from '@/app/_core/component-map/component-map'
 import { UserTypeEnum } from '../_components/chat/enums/chat.enum'
 import Init from '../_components/init/init'
+import Articles from '../_components/articles/articles'
 
 
 
@@ -28,9 +29,9 @@ export default function Home() {
             {/*  */}
             <Navbar/>
             <Header/>
-          
+            <Articles/>
             <div className='container mx-auto bg-[#222]'>
-         
+                
                 <Laboral/>
                 <Civil/>
                 <Family/> 
