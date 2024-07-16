@@ -41,6 +41,7 @@ module.exports = {
         'lab0': "url('/static/laboral/lab0.png')",
         'lab1': "url('/static/laboral/lab1.png')",
         'lab2': "url('/static/laboral/lab2.png')",
+        'lab3': "url('/static/laboral/lab3.png')",
         'lab4': "url('/static/laboral/lab4.png')",
         'lab5': "url('/static/laboral/lab5.png')",
         'lab6': "url('/static/laboral/lab6.png')",

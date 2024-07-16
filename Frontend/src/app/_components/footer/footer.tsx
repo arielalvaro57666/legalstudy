@@ -1,8 +1,8 @@
 
 export default function Footer(){
     return(
-        <div className="w-full h-96 bg-[#100f0f]">
+        <footer className="w-full h-1/3 border-2 border-black bg-[#100f0f]">
 
-        </div>
+        </footer>
     )
 }

@@ -7,7 +7,7 @@
 *{
   margin: 0;
   padding: 0;
-  box-sizing: border-box; 
+  box-sizing: border-box !important; 
   scroll-behavior: smooth;
  }
 
@@ -20,5 +20,28 @@ input:focus {
 }
 
 .titleBox{
-  clip-path: polygon(5% 0%, 95% 0%, 100% 20%, 100% 80%, 95% 100%, 5% 100%, 0% 80%, 0% 20%);
+  clip-path: polygon(2% 0%, 98% 0%, 100% 20%, 100% 80%, 98% 100%, 2% 100%, 0% 80%, 0% 20%);
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.element {
+  animation: slideDown 0.5s ease-out;
+}
+
+.shadow1{
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+}
+
+.logobg{
+  clip-path: polygon(0 44%, 0 0, 100% 0, 100% 100%, 50% 90%, 0 100%);
 }

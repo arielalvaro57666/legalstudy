@@ -1,4 +1,15 @@
 
+export interface IArticleType{
+    section: string
+}
+
+export interface IArticle{
+    title: string
+    alias: string
+    imageName?: string
+}
+
+
 
 export interface IRequestDisplayProp{
     displayRequest: IRequestDisplay
@@ -13,9 +24,16 @@ export interface IRequestDisplay{
     selection: string 
 }
 
-export interface IDisplayInfo{
+
+
+export interface IDisplayData{
     title: string
-    text: string
+    options: any
+    option_list: string[]
+}
+
+
+export interface IDisplayInfo{
     option: string
-    options: string[]
+    text: string
 }

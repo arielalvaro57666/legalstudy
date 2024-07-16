@@ -6,7 +6,7 @@ import {IChat, IChatProp, IMessage, IMessageData, IMessageProp} from "./interfac
 import DataServiceContext from "@/app/_core/services/dataService";
 
 import { MessageTypeEnum, MessageOriginEnum, UserTypeEnum } from "./enums/chat.enum";
-import { ComponentMap } from "@/app/_core/component-map/component-map";
+
 import WebSocketServiceContext from "@/app/_core/services/websocketService";
 
 import "./chat.css"
@@ -223,8 +223,12 @@ export default function Chat({actual_user, chat_data}: IChatProp  ){
                 
                 {open ?
                 <main className={`w-full lg:h-[80%] h-[85%] bg-slate-700 p-4 overflow-y-auto `} ref={mainRef}>
-                    <ComponentMap components={messages}/>
-                    
+                    {/* <ComponentMap components={messages}/> */}
+                    {messages.map((elem, index)=>(
+                        <div key={index}>
+                            {elem}
+                        </div>
+                    ))}
                 </main> : null}
 
                 {open ?
@@ -279,8 +283,12 @@ export default function Chat({actual_user, chat_data}: IChatProp  ){
                 
                 {open ?
                 <main className={`w-full lg:h-96 h-[85%] bg-zinc-800 p-4 overflow-scroll`} ref={mainRef}>
-                    <ComponentMap components={messages}/>
-                    
+                    {/* <ComponentMap components={messages}/> */}
+                    {messages.map((elem, index)=>(
+                        <div key={index}>
+                            {elem}
+                        </div>
+                    ))}
                 </main> : null}
 
                 {open ?

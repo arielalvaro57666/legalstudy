@@ -1,4 +1,8 @@
-## [0.6] - 0.6 2025-7-5
+## [0.7] - 2025-7-16
+Frontend
+- Reduced display info options to one component
+
+## [0.6] - 2025-7-5
 Frontend 
 - WebsocketService now hashmap websocket dependending on the websocket type
 - Panelchat for dashboard (connected chats and viceversa)
