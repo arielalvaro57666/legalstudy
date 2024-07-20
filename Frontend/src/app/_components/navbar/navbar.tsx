@@ -23,19 +23,13 @@ export default function Navbar(){//{chat}:headerProp
 
 //#1d1d1d
     return(
-        <>
-            <div className='w-full flex flex-col ml-4' >
-                <nav className="w-20 h-30 logobg fixed bg-black flex justify-center items-center">
-                
-                    <div className="">
-                        <img className='w-full h-full ' width={20} height={30} src='/static/iconos/logoT.png' alt='logo'></img>
 
-                    </div>
+        <nav className="logobg ml-4 w-12 h-12 lg:h-24 lg:w-20 fixed z-50 bg-black flex justify-center items-center">
 
-                </nav>
+            <img className='w-10 h-10 lg:w-16 lg:h-16' src='/static/iconos/logo.png' alt='logo'></img>
+        </nav>
 
-            </div>
-        </>
+
     )
 
 }

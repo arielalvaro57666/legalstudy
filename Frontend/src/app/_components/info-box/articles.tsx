@@ -16,9 +16,6 @@ export default function Articles({section}: IArticleType){
         console.log("GET!", section)
         getArticles()
 
-        if(articleOptions != null && displayInfo == null){
-            setOption("Explicacion")
-        }
 
     },[articleOptions])
     
@@ -43,7 +40,10 @@ export default function Articles({section}: IArticleType){
             setCalculo(true)
             return
         }
-
+        if (option == displayInfo?.option){
+            setDisplayInfo(null)
+            return
+        }
         setCalculo(false)
         let display_info: IDisplayInfo = {
             option: option,
@@ -70,19 +70,26 @@ export default function Articles({section}: IArticleType){
             </section>
             :
             // SECTION
-            <section className="w-full h-full p-4 flex flex-col gap-5 lg:grid lg:grid-cols-4 ">
+            <section className="w-full h-full p-4 flex flex-col">
 
-                <section className="shadow1 w-full h-full bg-[#222] rounded-lg flex justify-center items-center p-2 lg:col-span-3">
-                    <section className="bg-[#191919] rounded-3xl flex justify-center items-center p-5 w-full h-full">
-                        {!calculo ? <p className="text-white border-2 rounded-xl text-center lg:p-20 text-lg md:text-4xl opacity-70">{displayInfo?.text}</p> : <Indemnization/>}
+
+                {articleOptions.option_list.map((option, index) => (
+                    <section className="element w-full flex flex-col mb-6">
+                    
+                        <button key={index} className="shadow1 bg-[#222] text-white md:text-3xl w-full h-16 md:h-24  focus:border-2" onClick={()=>{setOption(option)}}>{option}</button>
+                        {displayInfo?.option == option ? 
+                        <div className="appear w-full bg-red-500">
+                            <p className="">{displayInfo.text}</p>
+                        </div>: null}
+                        
                     </section>
-                </section>
+                ))}
 
-                <section className="w-full h-full flex flex-col justify-around gap-4 items-center">
-                    {articleOptions.option_list.map((option, index) => (
-                        <button key={index} className="shadow1 bg-[#222] text-white md:text-3xl w-full h-16 md:h-32 rounded-lg focus:border-2" onClick={()=>{setOption(option)}}>{option}</button>
-                    ))}
-                </section>
+                    
+                    
+              
+
+
             </section>
             
 

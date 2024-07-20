@@ -45,3 +45,30 @@ input:focus {
 .logobg{
   clip-path: polygon(0 44%, 0 0, 100% 0, 100% 100%, 50% 90%, 0 100%);
 }
+
+.text{
+  text-align: justify; /* Justifica el texto */
+  overflow-wrap: break-word; /* Rompe las palabras solo si es necesario */
+  word-wrap: break-word; /* Compatibilidad con versiones antiguas de IE */
+  word-break: normal;
+}
+
+@keyframes appear {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    transform-origin: top;
+    opacity: 1;
+  }
+}
+
+.appear {
+  display: inline-block; /* Asegura que el elemento solo ocupe el espacio necesario */
+  animation: appear 0.2s ease-out;
+  overflow: hidden; /* Asegura que el contenido excedente no sea visible */
+
+}

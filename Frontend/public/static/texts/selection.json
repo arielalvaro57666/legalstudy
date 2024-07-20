@@ -3,9 +3,7 @@
 "Laboral":{
 
     "despido":{"title": "ME DESPIDIERON",
-               "options": {"Explicacion": "Está situación se da cuando tú empleador toma la decisión de dejarte sin trabajo con o sin una causa que lo justifique. Dependiendo el caso concreto deberá abonarte o no una indemnización.",
-                           "Con Causa": "Está situación se da cuando tú empleador toma la decisión de dejarte sin trabajo con o sin una causa que lo justifique. Dependiendo el caso concreto deberá abonarte o no una indemnización.",
-                           "Sin Causa": "En este caso tu empleador te despide sin dar justificación alguna. Si bien está en su derecho de hacerlo, deberá pagar las indemnizaciones correspondientes",
+               "options": {"Explicacion": "El Despido directo, se da cuando el empleador decide finalizar la elación laboral, y puede ser sin causa o con justa causa. El primero de ellos, también llamado “incausado”, lo decide el  arbitrariamente, sin una causa aparente, o con una causa insuficiente o inexistente. En estos casos, genera el derecho del trabajador a cobrar ",
                            "Cuanto me corresponde":""}},
                         
     "negro":{"title": "ESTOY TRABAJANDO EN NEGRO",

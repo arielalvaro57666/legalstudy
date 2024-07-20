@@ -18,7 +18,7 @@ import { UserTypeEnum } from '../_components/chat/enums/chat.enum'
 import Init from '../_components/init/init'
 import Articles from '../_components/info-box/articles'
 import InformationBox from '../_components/info-box/information-box'
-
+import { RiWhatsappFill } from "react-icons/ri";
 
 
 export default function Home() {
@@ -30,7 +30,7 @@ export default function Home() {
             <Navbar/>
             <Header/>
             <InformationBox/>
-
+            {/* <RiWhatsappFill className="fixed w-20 h-20 bottom-16 md:w-0 md:h-0"/> */}
 
             <Chat actual_user={UserTypeEnum.AnonymousUser}/>
 

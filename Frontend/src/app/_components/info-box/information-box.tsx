@@ -16,13 +16,13 @@ export default function InformationBox(){
     }
 
     return (
-        <section className="flex flex-col bg-[#1d1d1d] justify-center items-center ">
+        <section className="flex flex-col bg-[#0f0e0e] justify-center items-center ">
             <div className='titleBox p-4 bg-[#141414] text-black '>
 
-                <h1 className='lg:text-6xl text-white text-4xl text-center uppercase font-semibold'>situaciones frecuentes</h1>
+                <h1 className='lg:text-6xl text-white text-2xl text-center uppercase font-semibold'>situaciones frecuentes</h1>
             </div>
             <section className="w-full p-4 md:p-10 flex justify-center">
-                <section className="w-full h-full lg:h-[60rem] bg-[#1d1d1d] rounded-lg flex flex-col items-center md:p-4 max-w-[90rem]" >
+                <section className="w-full h-full lg:h-[70rem]  rounded-lg flex flex-col items-center md:p-4 max-w-[90rem] gap-10" >
                     {/* Button types */}
                     <div className="shadow1 w-96 h-10 lg:h-[3.5rem] bg-zinc-800 flex flex-grow rounded-lg" >
                         
@@ -32,7 +32,7 @@ export default function InformationBox(){
 
                     </div>
 
-            
+                    
                     <Articles key={switcher} section={section}/>
         
 
